@@ -1,0 +1,21 @@
+/* IkaOS – style index. Import order matters: base must come first. */
+@import './base.css';
+@import './menu-bar.css';
+@import './desktop.css';
+@import './dock.css';
+@import './window.css';
+@import './finder.css';
+@import './preview.css';
+@import './terminal.css';
+@import './safari.css';
+@import './system-prefs.css';
+@import './overlays.css';
+@import './boot.css';
+@import './welcome.css';
+@import './context-menu.css';
+@import './stickies.css';
+@import './spotlight.css';
+@import './about-this-mac.css';
+@import './app-switcher.css';
+@import './volume-hud.css';
+@import './mobile.css';

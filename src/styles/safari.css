@@ -1,0 +1,363 @@
+/* --- Safari --- */
+
+.safari {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ---- Toolbar Row 1: Nav + Address + Search ---- */
+
+.safari-toolbar-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 100%);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.safari-nav-group {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.safari-nav-btn {
+  width: 26px;
+  height: 22px;
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #f2f2f2 0%, #dcdcdc 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.3);
+  color: #555;
+  font-size: 9px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+}
+
+.safari-nav-btn:disabled {
+  opacity: 0.5;
+}
+
+.safari-nav-btn--plus {
+  font-size: 14px;
+  font-weight: 300;
+  color: #666;
+}
+
+.safari-nav-arrow {
+  font-size: 8px;
+  line-height: 1;
+}
+
+/* Address bar */
+
+.safari-address-bar {
+  flex: 1;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  background: #fff;
+  border: 1px solid #a0a0a0;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  min-width: 0;
+}
+
+.safari-address-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.safari-address-text {
+  flex: 1;
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.safari-address-x {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: none;
+  background: none;
+  color: #999;
+  font-size: 13px;
+  line-height: 1;
+  cursor: default;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.safari-address-x:disabled {
+  opacity: 0.4;
+}
+
+/* Search field */
+
+.safari-search-field {
+  width: 170px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  background: #fff;
+  border: 1px solid #a0a0a0;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.safari-search-icon {
+  flex-shrink: 0;
+}
+
+.safari-search-text {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* ---- Toolbar Row 2: Bookmarks Bar ---- */
+
+.safari-bookmarks-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  height: 22px;
+  background: linear-gradient(180deg, #e6e6e6 0%, #d6d6d6 100%);
+  border-bottom: 1px solid #b0b0b0;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.safari-bm-icon-btn {
+  width: 20px;
+  height: 16px;
+  border: none;
+  background: none;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.safari-bm-icon-btn:hover {
+  opacity: 1;
+}
+
+.safari-bm-divider {
+  width: 1px;
+  height: 14px;
+  background: #b0b0b0;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.safari-bookmark-link {
+  font-size: 11px;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.safari-bookmark-link:hover {
+  background: rgba(0, 0, 0, 0.07);
+  color: #000;
+}
+
+/* ---- Content: Top Sites ---- */
+
+.safari-top-sites {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 30%, #1e2033 0%, #0c0d14 50%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 60px 0;
+}
+
+/* Top Sites / History toggle */
+
+.safari-ts-header {
+  padding: 14px 0 10px;
+  flex-shrink: 0;
+}
+
+.safari-ts-toggle {
+  display: inline-flex;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.safari-ts-toggle-opt {
+  padding: 3px 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: default;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.safari-ts-toggle-opt--active {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Card grid */
+
+.safari-ts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 16px;
+  padding: 10px 40px 20px;
+  width: 100%;
+  max-width: 640px;
+  perspective: 900px;
+}
+
+.safari-site-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transform: rotateX(2deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.safari-site-card:hover {
+  transform: rotateX(0deg) translateY(-3px);
+}
+
+.safari-site-card:hover .safari-card-preview {
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.7),
+    0 0 0 2px rgba(255, 255, 255, 1);
+}
+
+/* Card preview (the "screenshot" thumbnail) */
+
+.safari-card-preview {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.safari-card-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+}
+
+.safari-card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  letter-spacing: 0.3px;
+}
+
+.safari-card-label {
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.safari-site-card:hover .safari-card-label {
+  color: #fff;
+}
+
+/* Caption text at bottom */
+
+.safari-ts-caption {
+  margin: auto 0 0 0;
+  padding: 20px 40px 0;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  line-height: 1.5;
+  max-width: 580px;
+}
+
+/* Edit button (decorative) */
+
+.safari-ts-edit {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  padding: 3px 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  cursor: default;
+  font-family: inherit;
+}
+
+.safari-ts-edit:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* Safari compass watermark */
+
+.safari-ts-compass {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}

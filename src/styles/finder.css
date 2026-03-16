@@ -1,0 +1,489 @@
+/* --- Finder --- */
+
+.finder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Toolbar */
+.finder-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #d8d8d8 0%, #b8b8b8 100%);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+}
+
+.finder-toolbar-group {
+  display: flex;
+  gap: 2px;
+}
+
+.finder-toolbar-btn {
+  background: linear-gradient(180deg, #f2f2f2 0%, #dcdcdc 100%);
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #444;
+  font-size: 11px;
+  height: 22px;
+  min-width: 24px;
+  padding: 0 6px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finder-toolbar-btn:disabled {
+  color: #aaa;
+}
+
+.finder-toolbar-nav {
+  font-size: 10px;
+  min-width: 22px;
+  padding: 0 4px;
+}
+
+.finder-toolbar-views {
+  gap: 0;
+}
+
+.finder-view-btn {
+  border-radius: 0;
+  border-right-width: 0;
+  min-width: 26px;
+}
+
+.finder-view-btn:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.finder-view-btn:last-child {
+  border-radius: 0 4px 4px 0;
+  border-right-width: 1px;
+}
+
+.finder-view-btn--active {
+  background: linear-gradient(180deg, #b0b0b0 0%, #c8c8c8 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.finder-toolbar-action {
+  min-width: 28px;
+}
+
+.finder-toolbar-spacer {
+  flex: 1;
+}
+
+.finder-search {
+  border: 1px solid #a0a0a0;
+  border-radius: 12px;
+  background: #fff;
+  padding: 3px 10px 3px 24px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  width: 160px;
+  height: 22px;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Ccircle cx='5.5' cy='5.5' r='4'/%3E%3Cline x1='8.5' y1='8.5' x2='13' y2='13'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  background-size: 14px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.finder-search:focus {
+  border-color: #6aaed8;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 3px rgba(100, 170, 220, 0.5);
+}
+
+/* Path bar */
+.finder-pathbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 12px;
+  height: 22px;
+  background: linear-gradient(180deg, #878787 0%, #6e6e6e 100%);
+  color: #fff;
+  font-size: 12px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #555;
+  flex-shrink: 0;
+}
+
+.finder-pathbar-icon {
+  font-size: 11px;
+}
+
+/* Sidebar + Content body */
+.finder-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.finder-sidebar {
+  width: 170px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #d5dce6 0%, #c8d0dc 100%);
+  border-right: 1px solid #a8b0b8;
+  padding: 6px 0;
+  overflow-y: auto;
+}
+
+.finder-sidebar-header {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6a7a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px 3px;
+  cursor: default;
+}
+
+.finder-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 12px 2px 20px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  color: #222;
+  width: 100%;
+  text-decoration: none;
+  line-height: 20px;
+}
+
+.finder-sidebar-link {
+  cursor: pointer;
+}
+
+.finder-sidebar-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.finder-sidebar-item--selected {
+  background: linear-gradient(180deg, #5c9de8 0%, #2a6fcc 100%);
+  color: #fff;
+  border-radius: 3px;
+  margin: 0 6px;
+  padding-left: 14px;
+  width: calc(100% - 12px);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.finder-sidebar-item--selected:hover {
+  background: linear-gradient(180deg, #5c9de8 0%, #2a6fcc 100%);
+}
+
+.finder-sidebar-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+}
+
+/* Content area */
+.finder-main {
+  flex: 1;
+  overflow: auto;
+  background: #fff;
+  min-height: 0;
+}
+
+/* List view */
+.finder-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.finder-list-header {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  background: linear-gradient(180deg, #f0f0f0 0%, #dcdcdc 100%);
+  border-bottom: 1px solid #b0b0b0;
+  font-size: 11px;
+  font-weight: 500;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.finder-list-row {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  height: 22px;
+  font-size: 12px;
+  color: #222;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.finder-list-row--alt {
+  background: #edf3fe;
+}
+
+.finder-list-row--selected {
+  background: linear-gradient(180deg, #5c9de8 0%, #2a6fcc 100%);
+  color: #fff;
+}
+
+.finder-list-row--selected a {
+  color: #d4e8ff;
+}
+
+.finder-list-icon {
+  margin-right: 4px;
+  font-size: 13px;
+}
+
+.finder-col-name {
+  flex: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.finder-col-desc {
+  flex: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
+  color: #555;
+  font-size: 11px;
+}
+
+.finder-list-row--selected .finder-col-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.finder-col-tech {
+  flex: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #666;
+  font-size: 11px;
+}
+
+.finder-list-row--selected .finder-col-tech {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.finder-col-links {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.finder-col-links a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.finder-col-links a:hover {
+  text-decoration: underline;
+}
+
+/* Resume view */
+.finder-resume {
+  max-width: 600px;
+  padding: 16px 20px;
+}
+
+.finder-resume-contact {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.finder-resume-section {
+  margin-bottom: 16px;
+}
+
+.finder-resume-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 3px;
+}
+
+.finder-resume-section-content {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Status bar */
+.finder-statusbar {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #e8e8e8 0%, #d4d4d4 100%);
+  border-top: 1px solid #b0b0b0;
+  font-size: 11px;
+  color: #555;
+  flex-shrink: 0;
+}
+
+/* Icon grid (Desktop view) */
+.finder-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 96px);
+  gap: 8px 4px;
+  padding: 16px;
+  justify-content: start;
+}
+
+.finder-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  cursor: default;
+  border-radius: 4px;
+  width: 96px;
+}
+
+.finder-icon-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.finder-icon-item--selected {
+  background: rgba(56, 117, 215, 0.15);
+}
+
+.finder-icon-item--selected:hover {
+  background: rgba(56, 117, 215, 0.2);
+}
+
+.finder-icon-item-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.finder-icon-item-label {
+  font-size: 11px;
+  color: #222;
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.2;
+  max-width: 84px;
+}
+
+.finder-icon-item--selected .finder-icon-item-label {
+  background: linear-gradient(180deg, #5c9de8 0%, #2a6fcc 100%);
+  color: #fff;
+  border-radius: 2px;
+  padding: 1px 6px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Project detail view */
+.finder-project-detail {
+  padding: 20px 24px;
+  max-width: 560px;
+}
+
+.finder-project-detail-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.finder-project-detail-icon {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.finder-project-detail-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #222;
+}
+
+.finder-project-detail-desc {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.finder-project-detail-section {
+  margin-bottom: 16px;
+}
+
+.finder-project-detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 6px 0;
+}
+
+.finder-project-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.finder-project-detail-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: linear-gradient(180deg, #f2f2f2 0%, #e4e4e4 100%);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  color: #444;
+}
+
+.finder-project-detail-links {
+  display: flex;
+  gap: 12px;
+}
+
+.finder-project-detail-links a {
+  font-size: 12px;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.finder-project-detail-links a:hover {
+  text-decoration: underline;
+}

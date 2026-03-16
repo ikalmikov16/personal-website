@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#5a9fd4" stroke="#3d7ab5" stroke-width="2"/>
+  <rect x="18" y="18" width="92" height="92" rx="16" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  <text x="64" y="78" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="48" font-weight="bold" fill="white" opacity="0.9">App</text>
+</svg>

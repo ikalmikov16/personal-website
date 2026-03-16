@@ -1,0 +1,73 @@
+/* --- Context menu --- */
+
+.context-menu {
+  position: fixed;
+  z-index: 90;
+  min-width: 180px;
+  padding: 3px 0;
+  background: rgba(246, 246, 246, 0.95);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 5px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  color: #222;
+  font-size: 13px;
+  animation: context-menu-in 100ms ease-out;
+}
+
+@keyframes context-menu-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 2px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+  color: #222;
+  cursor: default;
+  white-space: nowrap;
+  line-height: 1.5;
+  font-family: inherit;
+  outline: none;
+}
+
+.context-menu-item:hover,
+.context-menu-item:focus-visible {
+  background: linear-gradient(180deg, #3d7de8 0%, #2862d0 100%);
+  color: #fff;
+}
+
+.context-menu-item--disabled {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.context-menu-item--disabled:hover,
+.context-menu-item--disabled:focus-visible {
+  background: transparent;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.context-menu-separator {
+  height: 1px;
+  margin: 4px 0;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .context-menu {
+    animation: none;
+  }
+}

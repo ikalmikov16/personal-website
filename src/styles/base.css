@@ -1,0 +1,58 @@
+/* IkaOS – global reset and Leopard CSS variables */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* App shell (full viewport) */
+.app-shell {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* --- Leopard / IkaOS CSS variables --- */
+
+:root {
+  --traffic-light-red: #f25d4e;
+  --traffic-light-red-top: #f8877c;
+  --traffic-light-red-bottom: #c22b1e;
+  --traffic-light-yellow: #eeac1a;
+  --traffic-light-yellow-top: #fcd151;
+  --traffic-light-yellow-bottom: #c48a06;
+  --traffic-light-green: #2ebd3e;
+  --traffic-light-green-top: #62d875;
+  --traffic-light-green-bottom: #189228;
+  --title-bar-bg: linear-gradient(180deg, #ececec 0%, #dcdcdc 50%, #c8c8c8 100%);
+  --title-bar-border-bottom: 1px solid #a0a0a0;
+  --window-radius: 5px;
+  --window-border: 1px solid rgba(0, 0, 0, 0.25);
+  --window-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+  --dock-bg: rgba(220, 220, 220, 0.4);
+  --dock-blur: 24px;
+  --dock-height: 72px;
+  --dock-shelf-height: 40px;
+  --menu-bar-blur: 24px;
+  --menu-bar-height: 22px;
+  --font-sans: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}

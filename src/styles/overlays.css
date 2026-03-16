@@ -1,0 +1,82 @@
+/* --- Window transition overlay --- */
+
+.window-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* --- Crash dialog (Easter egg) --- */
+
+.crash-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.crash-dialog {
+  width: 90%;
+  max-width: 420px;
+  padding: 24px;
+  background: linear-gradient(180deg, #f0f0f0 0%, #e5e5e5 100%);
+  border: 1px solid #b0b0b0;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.crash-dialog-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.crash-dialog-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px;
+}
+
+.crash-dialog-message {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 20px;
+  line-height: 1.4;
+}
+
+.crash-dialog-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.crash-dialog-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  border: 1px solid #999;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #f5f5f5 0%, #e0e0e0 100%);
+  cursor: pointer;
+  color: #333;
+}
+
+.crash-dialog-btn:hover {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d5d5d5 100%);
+}
+
+.crash-dialog-btn--primary {
+  font-weight: 600;
+  border-color: #4a7ab8;
+  background: linear-gradient(180deg, #6d9ed4 0%, #4a7ab8 100%);
+  color: #fff;
+}
+
+.crash-dialog-btn--primary:hover {
+  background: linear-gradient(180deg, #7aa8e0 0%, #5a8ac8 100%);
+}

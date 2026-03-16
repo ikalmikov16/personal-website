@@ -1,0 +1,56 @@
+/* --- Boot screen --- */
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  opacity: 1;
+  transition: opacity 500ms ease-out;
+}
+
+.boot-screen--fading {
+  opacity: 0;
+}
+
+.boot-screen--no-motion {
+  transition: none;
+}
+
+.boot-screen--no-motion .boot-screen-progress-fill {
+  animation: none;
+  width: 100%;
+}
+
+.boot-screen-logo {
+  margin-bottom: 28px;
+}
+
+.boot-screen-progress {
+  width: 200px;
+  height: 4px;
+  background: #a0a0a0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.boot-screen-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #6e6e6e;
+  border-radius: 2px;
+  animation: boot-progress 2.5s ease-in-out forwards;
+}
+
+@keyframes boot-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

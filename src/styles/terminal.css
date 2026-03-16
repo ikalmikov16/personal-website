@@ -1,0 +1,47 @@
+/* --- Terminal --- */
+
+.terminal {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  color: #c0c0c0;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+.terminal-output {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 12px;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.terminal-line--input {
+  color: #7fff7f;
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid #333;
+}
+
+.terminal-prompt {
+  color: #7fff7f;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #c0c0c0;
+  font: inherit;
+  outline: none;
+}

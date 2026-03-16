@@ -1,0 +1,70 @@
+/* --- App Switcher --- */
+
+.app-switcher-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.app-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 24px;
+  background: rgba(30, 30, 30, 0.8);
+  -webkit-backdrop-filter: saturate(180%) blur(30px);
+  backdrop-filter: saturate(180%) blur(30px);
+  border-radius: 18px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  max-width: 80vw;
+  overflow-x: auto;
+}
+
+.app-switcher--entering {
+  animation: app-switcher-in 100ms ease-out;
+}
+
+@keyframes app-switcher-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.app-switcher-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  min-width: 80px;
+}
+
+.app-switcher-item--selected {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.app-switcher-icon {
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+}
+
+.app-switcher-label {
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-switcher--entering {
+    animation: none;
+  }
+}
