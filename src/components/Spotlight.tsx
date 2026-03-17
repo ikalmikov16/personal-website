@@ -145,7 +145,12 @@ export function Spotlight({ onClose, onAction, searchItems, reduceMotion }: Spot
                       onClick={() => triggerAction(idx)}
                     >
                       {item.icon ? (
-                        <img src={item.icon} alt="" className="spotlight-result-icon" draggable={false} />
+                        <img
+                          src={item.icon}
+                          alt=""
+                          className="spotlight-result-icon"
+                          draggable={false}
+                        />
                       ) : (
                         <span className="spotlight-result-icon spotlight-result-icon--empty" />
                       )}

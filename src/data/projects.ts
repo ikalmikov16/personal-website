@@ -5,11 +5,11 @@ export type { Project }
 export const PROJECTS: Project[] = [
   {
     id: 'mosaic',
-    title: 'Live Mosaic',
+    title: 'Live Tesserae',
     oneLiner:
-      'Interactive, live-updating mosaic: 1 million tiles of 32×32 pixel images that users can color; updates in real time for everyone.',
+      'A collaborative, real-time mosaic canvas — 1 million tiles of 32×32 pixel art that anyone can draw on, with changes appearing live for all viewers.',
     tech: ['React', 'FastAPI', 'WebSockets', 'AWS'],
-    links: { repo: 'https://github.com/ikalmikov16' }, // TODO: add live URL when deployed
+    links: { live: 'https://tesserae.live', repo: 'https://github.com/ikalmikov16' },
   },
   {
     id: 'sketchoff',
@@ -28,6 +28,9 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'Web app for students to build their final exam schedule and export to calendar. Deployed on Render; scaled to ~17k students.',
     tech: ['React', 'Django', 'PostgreSQL'],
-    links: { repo: 'https://github.com/ikalmikov16' }, // TODO: add live URL if still up
+    links: {
+      live: 'https://fordham-exams.onrender.com/',
+      repo: 'https://github.com/ikalmikov16/Fordham-Final-Exam-Scheduler',
+    },
   },
 ]

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/refs -- Dock intentionally reads iconRefs during render to compute real-time parabolic magnification from live DOM positions */
-import { forwardRef, useRef, useState, useCallback, useEffect } from 'react'
+import { forwardRef, useRef, useState, useCallback, useMemo } from 'react'
 import type { AppItem } from '../types/ui'
 import type { ContextMenuState } from './ContextMenu'
 
@@ -19,6 +19,7 @@ type DockProps = {
   rightApps?: AppItem[]
   minimizedThumbnails?: MinimizedThumbnail[]
   onRestoreWindow?: (windowId: string) => void
+  animatingMinimizeIds?: Set<string>
 }
 
 const BASE_SIZE = 48
@@ -32,13 +33,14 @@ function getScale(iconCenterX: number, mouseX: number | null): number {
 }
 
 function useSnapshotUrl(snapshot?: HTMLCanvasElement): string {
-  const [url, setUrl] = useState('')
-  useEffect(() => {
-    if (!snapshot) { setUrl(''); return }
-    try { setUrl(snapshot.toDataURL('image/jpeg', 0.5)) }
-    catch { setUrl('') }
+  return useMemo(() => {
+    if (!snapshot) return ''
+    try {
+      return snapshot.toDataURL('image/jpeg', 0.5)
+    } catch {
+      return ''
+    }
   }, [snapshot])
-  return url
 }
 
 function MinimizedThumb({
@@ -49,6 +51,7 @@ function MinimizedThumb({
   onHover,
   onLeave,
   onRestore,
+  hidden,
 }: {
   thumb: MinimizedThumbnail
   mouseX: number | null
@@ -57,6 +60,7 @@ function MinimizedThumb({
   onHover: (id: string) => void
   onLeave: () => void
   onRestore: () => void
+  hidden?: boolean
 }) {
   const btnRef = useRef<HTMLButtonElement | null>(null)
   const thumbUrl = useSnapshotUrl(thumb.snapshot)
@@ -77,14 +81,17 @@ function MinimizedThumb({
       type="button"
       className="dock-icon dock-minimized-thumb"
       data-window-id={thumb.windowId}
-      ref={(el) => { btnRef.current = el; elRef(el) }}
+      ref={(el) => {
+        btnRef.current = el
+        elRef(el)
+      }}
       onClick={onRestore}
       onMouseEnter={() => onHover(hoverKey)}
       onMouseLeave={onLeave}
       aria-label={`Restore ${thumb.title}`}
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, ...(hidden ? { visibility: 'hidden' as const } : {}) }}
     >
-      {isHovered && <span className="dock-tooltip">{thumb.title}</span>}
+      {isHovered && !hidden && <span className="dock-tooltip">{thumb.title}</span>}
       {thumbUrl ? (
         <img
           src={thumbUrl}
@@ -113,6 +120,7 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(function Dock(
     rightApps = [],
     minimizedThumbnails = [],
     onRestoreWindow,
+    animatingMinimizeIds,
   },
   ref
 ) {
@@ -143,7 +151,11 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(function Dock(
           x: e.clientX,
           y: e.clientY,
           items: [
-            { type: 'item', label: 'Open', action: () => window.open(app.href, '_blank', 'noopener,noreferrer') },
+            {
+              type: 'item',
+              label: 'Open',
+              action: () => window.open(app.href, '_blank', 'noopener,noreferrer'),
+            },
           ],
         })
         return
@@ -209,7 +221,9 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(function Dock(
                     window.open(app.href, '_blank', 'noopener,noreferrer')
                   } else {
                     const isOpen = openWindows.some((w) => w.appId === app.appId && !w.minimized)
-                    const isMinimized = openWindows.some((w) => w.appId === app.appId && w.minimized)
+                    const isMinimized = openWindows.some(
+                      (w) => w.appId === app.appId && w.minimized
+                    )
                     if (!isOpen && !isMinimized) {
                       if (isBouncing) return
                       setBouncingApps((prev) => new Set(prev).add(app.appId))
@@ -289,11 +303,14 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(function Dock(
                   key={thumb.windowId}
                   thumb={thumb}
                   mouseX={mouseX}
-                  elRef={(el) => { thumbRefs.current[i] = el }}
+                  elRef={(el) => {
+                    thumbRefs.current[i] = el
+                  }}
                   hoveredId={hoveredAppId}
                   onHover={setHoveredAppId}
                   onLeave={() => setHoveredAppId(null)}
                   onRestore={() => onRestoreWindow?.(thumb.windowId)}
+                  hidden={animatingMinimizeIds?.has(thumb.windowId)}
                 />
               ))}
 
@@ -315,8 +332,12 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(function Dock(
                       if (app.href) {
                         window.open(app.href, '_blank', 'noopener,noreferrer')
                       } else {
-                        const isOpen = openWindows.some((w) => w.appId === app.appId && !w.minimized)
-                        const isMinimized = openWindows.some((w) => w.appId === app.appId && w.minimized)
+                        const isOpen = openWindows.some(
+                          (w) => w.appId === app.appId && !w.minimized
+                        )
+                        const isMinimized = openWindows.some(
+                          (w) => w.appId === app.appId && w.minimized
+                        )
                         if (!isOpen && !isMinimized) {
                           if (isBouncing) return
                           setBouncingApps((prev) => new Set(prev).add(app.appId))

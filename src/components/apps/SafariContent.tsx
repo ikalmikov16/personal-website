@@ -40,9 +40,24 @@ export function SafariContent({ onTitleChange }: SafariContentProps) {
           </button>
         </div>
         <div className="safari-search-field">
-          <svg className="safari-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <svg
+            className="safari-search-icon"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            aria-hidden="true"
+          >
             <circle cx="5" cy="5" r="3.5" stroke="#999" strokeWidth="1.2" />
-            <line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="#999" strokeWidth="1.2" strokeLinecap="round" />
+            <line
+              x1="7.5"
+              y1="7.5"
+              x2="10.5"
+              y2="10.5"
+              stroke="#999"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
           </svg>
           <span className="safari-search-text">Google</span>
         </div>
@@ -97,7 +112,10 @@ export function SafariContent({ onTitleChange }: SafariContentProps) {
               rel="noopener noreferrer"
             >
               <div className="safari-card-preview" style={{ background: link.color }}>
-                <div className="safari-card-header" style={{ background: `color-mix(in srgb, ${link.color}, #000 25%)` }} />
+                <div
+                  className="safari-card-header"
+                  style={{ background: `color-mix(in srgb, ${link.color}, #000 25%)` }}
+                />
                 <span className="safari-card-name">{link.shortName}</span>
               </div>
               <span className="safari-card-label">{link.label}</span>
@@ -106,11 +124,13 @@ export function SafariContent({ onTitleChange }: SafariContentProps) {
         </div>
 
         <p className="safari-ts-caption">
-          As you browse the web, Safari will learn which websites are your
-          favorites and display them above as your Top Sites.
+          As you browse the web, Safari will learn which websites are your favorites and display
+          them above as your Top Sites.
         </p>
 
-        <button className="safari-ts-edit" type="button">Edit</button>
+        <button className="safari-ts-edit" type="button">
+          Edit
+        </button>
 
         <img
           src="/icons/safari.png"

@@ -19,7 +19,12 @@ const APP_TITLES: Record<string, string> = {
   systempreferences: 'Settings',
 }
 
-export function MobileAppView({ appId, onBack, wallpaperId, onWallpaperChange }: MobileAppViewProps) {
+export function MobileAppView({
+  appId,
+  onBack,
+  wallpaperId,
+  onWallpaperChange,
+}: MobileAppViewProps) {
   const [entered, setEntered] = useState(false)
 
   useEffect(() => {
@@ -63,22 +68,39 @@ function ProjectsView() {
           <p className="mobile-card-desc">{p.oneLiner}</p>
           <div className="mobile-card-tags">
             {p.tech.map((t) => (
-              <span key={t} className="mobile-card-tag">{t}</span>
+              <span key={t} className="mobile-card-tag">
+                {t}
+              </span>
             ))}
           </div>
           <div className="mobile-card-links">
             {p.links.repo && (
-              <a href={p.links.repo} target="_blank" rel="noopener noreferrer" className="mobile-card-link">
+              <a
+                href={p.links.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-card-link"
+              >
                 View Repo
               </a>
             )}
             {p.links.appStore && (
-              <a href={p.links.appStore} target="_blank" rel="noopener noreferrer" className="mobile-card-link">
+              <a
+                href={p.links.appStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-card-link"
+              >
                 App Store
               </a>
             )}
             {p.links.playStore && (
-              <a href={p.links.playStore} target="_blank" rel="noopener noreferrer" className="mobile-card-link">
+              <a
+                href={p.links.playStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-card-link"
+              >
                 Play Store
               </a>
             )}
@@ -115,24 +137,44 @@ function AboutView() {
       <h2 className="mobile-about-name">Irakli Kalmikov</h2>
       <p className="mobile-about-role">Full Stack Developer</p>
       <p className="mobile-about-bio">
-        Building web apps, APIs, and mobile apps. React, Python, TypeScript, React Native.
-        Based in New York.
+        Building web apps, APIs, and mobile apps. React, Python, TypeScript, React Native. Based in
+        New York.
       </p>
       <div className="mobile-about-stack">
-        {['React', 'TypeScript', 'Python', 'React Native', 'Django', 'FastAPI', 'PostgreSQL', 'Firebase', 'AWS'].map(
-          (t) => (
-            <span key={t} className="mobile-card-tag">{t}</span>
-          )
-        )}
+        {[
+          'React',
+          'TypeScript',
+          'Python',
+          'React Native',
+          'Django',
+          'FastAPI',
+          'PostgreSQL',
+          'Firebase',
+          'AWS',
+        ].map((t) => (
+          <span key={t} className="mobile-card-tag">
+            {t}
+          </span>
+        ))}
       </div>
       <div className="mobile-about-links">
         <a href="mailto:irakli.kalmikov@gmail.com" className="mobile-about-link">
           Email
         </a>
-        <a href="https://linkedin.com/in/ikalmikov" target="_blank" rel="noopener noreferrer" className="mobile-about-link">
+        <a
+          href="https://linkedin.com/in/ikalmikov"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mobile-about-link"
+        >
           LinkedIn
         </a>
-        <a href="https://github.com/ikalmikov16" target="_blank" rel="noopener noreferrer" className="mobile-about-link">
+        <a
+          href="https://github.com/ikalmikov16"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mobile-about-link"
+        >
           GitHub
         </a>
       </div>
@@ -144,12 +186,7 @@ function ResumeView() {
   return (
     <div className="mobile-view-resume">
       <p className="mobile-resume-text">View or download the full resume.</p>
-      <a
-        href="/Resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mobile-resume-btn"
-      >
+      <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="mobile-resume-btn">
         Download Resume (PDF)
       </a>
     </div>

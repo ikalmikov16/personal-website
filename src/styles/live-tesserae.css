@@ -1,0 +1,258 @@
+/* --- Live Tesserae project page (dark theme) --- */
+
+.lt {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Toolbar — stays Snow Leopard chrome */
+
+.lt-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 100%);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.lt-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.lt-toolbar-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.lt-toolbar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.lt-toolbar-btn {
+  background: linear-gradient(180deg, #f2f2f2 0%, #dcdcdc 100%);
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #333;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  height: 22px;
+  padding: 0 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.lt-toolbar-btn:hover {
+  background: linear-gradient(180deg, #f8f8f8 0%, #e4e4e4 100%);
+  color: #111;
+}
+
+.lt-toolbar-btn:active {
+  background: linear-gradient(180deg, #c8c8c8 0%, #d8d8d8 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark scrollable content area */
+
+.lt-content {
+  flex: 1;
+  overflow: auto;
+  background: radial-gradient(ellipse at 50% 20%, #1e2030 0%, #121318 60%, #0c0d12 100%);
+  min-height: 0;
+  padding: 20px 24px 32px;
+}
+
+/* Hero row: demo + description side by side */
+
+.lt-hero {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+  align-items: flex-start;
+}
+
+/* Mini-mosaic demo container (dark frame) */
+
+.lt-demo {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lt-demo-frame {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 6px;
+  line-height: 0;
+}
+
+.lt-demo-canvas {
+  display: block;
+  cursor: crosshair;
+  border-radius: 3px;
+  image-rendering: pixelated;
+}
+
+.lt-demo-palette {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.lt-demo-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition:
+    border-color 0.1s ease,
+    transform 0.1s ease;
+}
+
+.lt-demo-color:hover {
+  transform: scale(1.15);
+}
+
+.lt-demo-color--active {
+  border-color: #4a9eff;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(74, 158, 255, 0.3),
+    0 0 6px rgba(74, 158, 255, 0.25);
+}
+
+.lt-demo-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Description panel */
+
+.lt-desc {
+  flex: 1;
+  min-width: 0;
+}
+
+.lt-desc-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.lt-desc-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+}
+
+.lt-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lt-stat {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Section headers */
+
+.lt-section {
+  margin-bottom: 24px;
+}
+
+.lt-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+/* Architecture tree diagram (pure SVG) */
+
+.lt-arch-tree {
+  width: 100%;
+  max-width: 460px;
+}
+
+/* Tech tags (dark) */
+
+.lt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lt-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Features list (dark) */
+
+.lt-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lt-features li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+
+.lt-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(74, 158, 255, 0.6);
+}

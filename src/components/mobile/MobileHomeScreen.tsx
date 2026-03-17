@@ -12,8 +12,18 @@ const HOME_APPS: HomeApp[] = [
   { id: 'preview', label: 'Resume', icon: '/icons/document.png' },
   { id: 'stickies', label: 'Notes', icon: '/icons/stickies.png' },
   { id: 'systempreferences', label: 'Settings', icon: '/icons/system-preferences.png' },
-  { id: 'github', label: 'GitHub', icon: '/icons/github.png', href: 'https://github.com/ikalmikov16' },
-  { id: 'linkedin', label: 'LinkedIn', icon: '/icons/linkedin.png', href: 'https://linkedin.com/in/ikalmikov' },
+  {
+    id: 'github',
+    label: 'GitHub',
+    icon: '/icons/github.png',
+    href: 'https://github.com/ikalmikov16',
+  },
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    icon: '/icons/linkedin.png',
+    href: 'https://linkedin.com/in/ikalmikov',
+  },
   { id: 'mail', label: 'Email', icon: '/icons/mail.png', href: 'mailto:irakli.kalmikov@gmail.com' },
 ]
 

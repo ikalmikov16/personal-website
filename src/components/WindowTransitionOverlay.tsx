@@ -51,7 +51,10 @@ function getAnimationGeometry(initialRect: RectLike, finalRect: RectLike, fracti
   const verticalDistanceToMove = finalRect.top - initialRect.top
 
   const topEdgeY = initialRect.top + translateProgress * verticalDistanceToMove
-  const bottomEdgeY = Math.min(initialRect.bottom + translateProgress * verticalDistanceToMove, finalRect.bottom)
+  const bottomEdgeY = Math.min(
+    initialRect.bottom + translateProgress * verticalDistanceToMove,
+    finalRect.bottom
+  )
 
   const bezierTopY = initialRect.top
   const bezierBottomY = finalRect.top
@@ -135,8 +138,7 @@ export function WindowTransitionOverlay({
 
     const windowArea = Math.max(1, windowRect.width * windowRect.height)
     const baseRowCount = Math.round(windowRect.height / 5.5)
-    const densityScale =
-      windowArea > 420_000 ? 0.62 : windowArea > 280_000 ? 0.78 : 1
+    const densityScale = windowArea > 420_000 ? 0.62 : windowArea > 280_000 ? 0.78 : 1
     const rowCount = Math.max(56, Math.min(180, Math.round(baseRowCount * densityScale)))
     const duration = reduceMotion
       ? REDUCED_MOTION_DURATION_MS

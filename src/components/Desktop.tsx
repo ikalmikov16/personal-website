@@ -40,7 +40,9 @@ function loadPositions(): Record<string, { x: number; y: number }> {
 function savePositions(positions: Record<string, { x: number; y: number }>) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(positions))
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
 }
 
 type DesktopProps = {
@@ -50,7 +52,8 @@ type DesktopProps = {
 }
 
 export function Desktop({ wallpaperId = 'default', onOpenWindow, onContextMenu }: DesktopProps) {
-  const [iconPositions, setIconPositions] = useState<Record<string, { x: number; y: number }>>(loadPositions)
+  const [iconPositions, setIconPositions] =
+    useState<Record<string, { x: number; y: number }>>(loadPositions)
   const [draggingId, setDraggingId] = useState<string | null>(null)
   const dragRef = useRef<{
     appId: string
@@ -74,7 +77,11 @@ export function Desktop({ wallpaperId = 'default', onOpenWindow, onContextMenu }
 
   const cleanUpIcons = useCallback(() => {
     setIconPositions({})
-    try { localStorage.removeItem(STORAGE_KEY) } catch { /* ignore */ }
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+    } catch {
+      /* ignore */
+    }
   }, [])
 
   const handleDesktopContextMenu = useCallback(

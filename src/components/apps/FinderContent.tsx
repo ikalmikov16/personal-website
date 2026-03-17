@@ -25,7 +25,9 @@ export function FinderContent({ onTitleChange }: FinderContentProps) {
   const [view, setView] = useState<FinderView>('desktop')
   const [selectedDesktopItem, setSelectedDesktopItem] = useState<string | null>(null)
   const titleChangeRef = useRef(onTitleChange)
-  titleChangeRef.current = onTitleChange
+  useEffect(() => {
+    titleChangeRef.current = onTitleChange
+  }, [onTitleChange])
 
   useEffect(() => {
     titleChangeRef.current?.(getTitleForView(view))
@@ -34,44 +36,101 @@ export function FinderContent({ onTitleChange }: FinderContentProps) {
   const activeProjectId = view.startsWith('project-') ? view.replace('project-', '') : null
   const activeProject = activeProjectId ? PROJECTS.find((p) => p.id === activeProjectId) : null
 
-  const itemCount = view === 'desktop'
-    ? `${DESKTOP_ICONS.length} items`
-    : activeProject
-      ? `${activeProject.tech.length} technologies`
-      : ''
+  const itemCount =
+    view === 'desktop'
+      ? `${DESKTOP_ICONS.length} items`
+      : activeProject
+        ? `${activeProject.tech.length} technologies`
+        : ''
 
   return (
     <div className="finder">
       {/* Toolbar */}
       <div className="finder-toolbar">
         <div className="finder-toolbar-group">
-          <button type="button" className="finder-toolbar-btn finder-toolbar-nav" disabled aria-label="Back">◀</button>
-          <button type="button" className="finder-toolbar-btn finder-toolbar-nav" disabled aria-label="Forward">▶</button>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-toolbar-nav"
+            disabled
+            aria-label="Back"
+          >
+            ◀
+          </button>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-toolbar-nav"
+            disabled
+            aria-label="Forward"
+          >
+            ▶
+          </button>
         </div>
         <div className="finder-toolbar-group finder-toolbar-views">
-          <button type="button" className="finder-toolbar-btn finder-view-btn finder-view-btn--active" aria-label="Icon view">
-            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor"><rect x="0" y="0" width="5" height="5" rx="0.5"/><rect x="7" y="0" width="5" height="5" rx="0.5"/><rect x="0" y="6.5" width="5" height="5" rx="0.5"/><rect x="7" y="6.5" width="5" height="5" rx="0.5"/></svg>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-view-btn finder-view-btn--active"
+            aria-label="Icon view"
+          >
+            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor">
+              <rect x="0" y="0" width="5" height="5" rx="0.5" />
+              <rect x="7" y="0" width="5" height="5" rx="0.5" />
+              <rect x="0" y="6.5" width="5" height="5" rx="0.5" />
+              <rect x="7" y="6.5" width="5" height="5" rx="0.5" />
+            </svg>
           </button>
-          <button type="button" className="finder-toolbar-btn finder-view-btn" aria-label="List view">
-            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor"><rect x="0" y="0" width="13" height="2" rx="0.5"/><rect x="0" y="3.5" width="13" height="2" rx="0.5"/><rect x="0" y="7" width="13" height="2" rx="0.5"/></svg>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-view-btn"
+            aria-label="List view"
+          >
+            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor">
+              <rect x="0" y="0" width="13" height="2" rx="0.5" />
+              <rect x="0" y="3.5" width="13" height="2" rx="0.5" />
+              <rect x="0" y="7" width="13" height="2" rx="0.5" />
+            </svg>
           </button>
-          <button type="button" className="finder-toolbar-btn finder-view-btn" aria-label="Column view">
-            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor"><rect x="0" y="0" width="3.5" height="11" rx="0.5"/><rect x="4.75" y="0" width="3.5" height="11" rx="0.5"/><rect x="9.5" y="0" width="3.5" height="11" rx="0.5"/></svg>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-view-btn"
+            aria-label="Column view"
+          >
+            <svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor">
+              <rect x="0" y="0" width="3.5" height="11" rx="0.5" />
+              <rect x="4.75" y="0" width="3.5" height="11" rx="0.5" />
+              <rect x="9.5" y="0" width="3.5" height="11" rx="0.5" />
+            </svg>
           </button>
-          <button type="button" className="finder-toolbar-btn finder-view-btn" aria-label="Cover Flow">
-            <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><rect x="0" y="0" width="15" height="6" rx="0.5"/><rect x="0" y="7.5" width="15" height="1" rx="0.5"/><rect x="0" y="9.5" width="15" height="1" rx="0.5"/></svg>
+          <button
+            type="button"
+            className="finder-toolbar-btn finder-view-btn"
+            aria-label="Cover Flow"
+          >
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor">
+              <rect x="0" y="0" width="15" height="6" rx="0.5" />
+              <rect x="0" y="7.5" width="15" height="1" rx="0.5" />
+              <rect x="0" y="9.5" width="15" height="1" rx="0.5" />
+            </svg>
           </button>
         </div>
-        <button type="button" className="finder-toolbar-btn finder-toolbar-action" aria-label="Action">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor" strokeWidth="1.2"/><path d="M7 3.5v4M5.5 6l1.5 1.5L8.5 6" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <button
+          type="button"
+          className="finder-toolbar-btn finder-toolbar-action"
+          aria-label="Action"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+            <circle cx="7" cy="7" r="6" fill="none" stroke="currentColor" strokeWidth="1.2" />
+            <path
+              d="M7 3.5v4M5.5 6l1.5 1.5L8.5 6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
         <div className="finder-toolbar-spacer" />
-        <input
-          type="search"
-          className="finder-search"
-          placeholder="Search"
-          aria-label="Search"
-        />
+        <input type="search" className="finder-search" placeholder="Search" aria-label="Search" />
       </div>
 
       {/* Path bar */}
@@ -170,7 +229,9 @@ export function FinderContent({ onTitleChange }: FinderContentProps) {
                 <h4 className="finder-project-detail-label">Technologies</h4>
                 <div className="finder-project-detail-tags">
                   {activeProject.tech.map((t) => (
-                    <span key={t} className="finder-project-detail-tag">{t}</span>
+                    <span key={t} className="finder-project-detail-tag">
+                      {t}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -179,16 +240,32 @@ export function FinderContent({ onTitleChange }: FinderContentProps) {
                 <h4 className="finder-project-detail-label">Links</h4>
                 <div className="finder-project-detail-links">
                   {activeProject.links.live && (
-                    <a href={activeProject.links.live} target="_blank" rel="noopener noreferrer">Live Site</a>
+                    <a href={activeProject.links.live} target="_blank" rel="noopener noreferrer">
+                      Live Site
+                    </a>
                   )}
                   {activeProject.links.repo && (
-                    <a href={activeProject.links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
+                    <a href={activeProject.links.repo} target="_blank" rel="noopener noreferrer">
+                      Repository
+                    </a>
                   )}
                   {activeProject.links.appStore && (
-                    <a href={activeProject.links.appStore} target="_blank" rel="noopener noreferrer">App Store</a>
+                    <a
+                      href={activeProject.links.appStore}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      App Store
+                    </a>
                   )}
                   {activeProject.links.playStore && (
-                    <a href={activeProject.links.playStore} target="_blank" rel="noopener noreferrer">Google Play</a>
+                    <a
+                      href={activeProject.links.playStore}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Google Play
+                    </a>
                   )}
                 </div>
               </div>

@@ -20,7 +20,12 @@ const PREF_SECTIONS: PrefSection[] = [
     title: 'Personal',
     items: [
       { id: 'appearance', label: 'Appearance' },
-      { id: 'desktop', label: 'Desktop &\nScreen Saver', icon: '/icons/system-preferences.png', pane: 'desktop' },
+      {
+        id: 'desktop',
+        label: 'Desktop &\nScreen Saver',
+        icon: '/icons/system-preferences.png',
+        pane: 'desktop',
+      },
       { id: 'dock', label: 'Dock' },
       { id: 'expose', label: 'Exposé &\nSpaces' },
       { id: 'lang', label: 'Language &\nText' },
@@ -157,7 +162,15 @@ export function SystemPreferencesContent({
         <div className="sysprefs-search">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
             <circle cx="5" cy="5" r="3.5" stroke="#999" strokeWidth="1.2" />
-            <line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="#999" strokeWidth="1.2" strokeLinecap="round" />
+            <line
+              x1="7.5"
+              y1="7.5"
+              x2="10.5"
+              y2="10.5"
+              stroke="#999"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
           </svg>
         </div>
       </div>
@@ -217,8 +230,20 @@ export function SystemPreferencesContent({
                     className={`dss-source-item${selectedSource === name ? ' dss-source-item--selected' : ''}`}
                     onClick={() => setSelectedSource(name)}
                   >
-                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" className="dss-folder-svg" aria-hidden="true">
-                      <path d="M1 1.5h3.5l1 1H11v6.5H1z" stroke="#6d8ab5" strokeWidth="1" fill="#a0c4e8" />
+                    <svg
+                      width="12"
+                      height="10"
+                      viewBox="0 0 12 10"
+                      fill="none"
+                      className="dss-folder-svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 1.5h3.5l1 1H11v6.5H1z"
+                        stroke="#6d8ab5"
+                        strokeWidth="1"
+                        fill="#a0c4e8"
+                      />
                     </svg>
                     {name}
                   </button>
@@ -232,8 +257,12 @@ export function SystemPreferencesContent({
               </div>
 
               <div className="dss-source-actions">
-                <button className="dss-action-btn" aria-label="Add">+</button>
-                <button className="dss-action-btn" aria-label="Remove">−</button>
+                <button className="dss-action-btn" aria-label="Add">
+                  +
+                </button>
+                <button className="dss-action-btn" aria-label="Remove">
+                  −
+                </button>
               </div>
             </div>
 
@@ -247,7 +276,12 @@ export function SystemPreferencesContent({
                     onClick={() => onWallpaperChange(opt.id)}
                     title={opt.label}
                   >
-                    <img src={opt.url} alt={opt.label} className="dss-thumb-img" draggable={false} />
+                    <img
+                      src={opt.url}
+                      alt={opt.label}
+                      className="dss-thumb-img"
+                      draggable={false}
+                    />
                   </button>
                 ))}
               </div>
@@ -281,14 +315,18 @@ export function SystemPreferencesContent({
       {currentPane === 'about' && (
         <div className="sysprefs-about">
           <img src="/icons/finder.png" alt="" className="sysprefs-about-avatar" draggable={false} />
-          <h2 className="sysprefs-about-name">Ika Kalmikov</h2>
+          <h2 className="sysprefs-about-name">Irakli Kalmikov</h2>
           <p className="sysprefs-about-role">Software Engineer</p>
           <div className="sysprefs-about-divider" />
           <p className="sysprefs-about-version">IkaOS Version 1.0</p>
           <p className="sysprefs-about-tech">Built with React, TypeScript, Vite & Bun</p>
           <div className="sysprefs-about-links">
-            <a href="https://linkedin.com/in/ikalmikov" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://github.com/ikalmikov16" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://linkedin.com/in/ikalmikov" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+            <a href="https://github.com/ikalmikov16" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
             <a href="mailto:irakli.kalmikov@gmail.com">Email</a>
           </div>
         </div>

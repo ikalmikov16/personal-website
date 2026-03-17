@@ -392,6 +392,7 @@
   width: 64px;
   height: 64px;
   object-fit: contain;
+  border-radius: 12px;
 }
 
 .finder-icon-item-label {

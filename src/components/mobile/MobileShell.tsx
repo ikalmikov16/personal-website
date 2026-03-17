@@ -27,7 +27,9 @@ export function MobileShell({ wallpaperId, onWallpaperChange }: MobileShellProps
     setLocked(false)
     try {
       sessionStorage.setItem('ika-os-mobile-unlocked', '1')
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
   }
 
   if (locked) {

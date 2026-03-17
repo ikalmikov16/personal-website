@@ -41,22 +41,22 @@ export const TRANSIENT_DOCK_APPS: AppItem[] = [
 
 export const DESKTOP_ICONS: DesktopIconItem[] = [
   {
-    label: 'Live Mosaic',
+    label: 'Live Tesserae',
     appId: 'project-mosaic',
-    title: 'Live Mosaic',
-    icon: '/icons/app-placeholder.svg',
+    title: 'Live Tesserae',
+    icon: '/icons/live-tesserae.svg',
   },
   {
     label: 'SketchOff',
     appId: 'project-sketchoff',
     title: 'SketchOff',
-    icon: '/icons/app-placeholder.svg',
+    icon: '/icons/sketchoff.png',
   },
   {
     label: 'Fordham Scheduler',
     appId: 'project-fordham',
     title: 'Fordham Scheduler',
-    icon: '/icons/app-placeholder.svg',
+    icon: '/icons/fordham.png',
   },
   { label: 'Resume', appId: 'preview', title: 'Resume', icon: '/icons/document.png' },
 ]

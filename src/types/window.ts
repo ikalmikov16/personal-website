@@ -13,7 +13,7 @@ export type WindowEntry = {
   preZoomRect?: { x: number; y: number; width: number; height: number } | null
 }
 
-export const DEFAULT_WINDOW_SIZE: WindowSize = { width: 480, height: 320 }
+export const DEFAULT_WINDOW_SIZE: WindowSize = { width: 650, height: 450 }
 
 export const MIN_WINDOW_WIDTH = 320
 export const MIN_WINDOW_HEIGHT = 240

@@ -61,7 +61,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 1px 0 rgba(255, 255, 255, 0.3);
   font-size: 12px;
-  font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
   color: #222;
   cursor: default;
   margin-left: 4px;
@@ -153,31 +153,81 @@
 }
 
 /* Placeholder icon colors — one per pane for variety */
-.sysprefs-icon-placeholder[data-pref="appearance"]  { background: linear-gradient(135deg, #7c8fdf, #4e5cb5); }
-.sysprefs-icon-placeholder[data-pref="dock"]         { background: linear-gradient(135deg, #5ac8fa, #007aff); }
-.sysprefs-icon-placeholder[data-pref="expose"]       { background: linear-gradient(135deg, #636b76, #3e4650); }
-.sysprefs-icon-placeholder[data-pref="lang"]         { background: linear-gradient(135deg, #af52de, #7b3fa0); }
-.sysprefs-icon-placeholder[data-pref="security"]     { background: linear-gradient(135deg, #a8a8a8, #6e6e6e); }
-.sysprefs-icon-placeholder[data-pref="spotlight"]    { background: linear-gradient(135deg, #5e8fd6, #3470c2); }
-.sysprefs-icon-placeholder[data-pref="cds"]          { background: linear-gradient(135deg, #c7c7cc, #8e8e93); }
-.sysprefs-icon-placeholder[data-pref="displays"]     { background: linear-gradient(135deg, #5ac8fa, #34aadc); }
-.sysprefs-icon-placeholder[data-pref="energy"]       { background: linear-gradient(135deg, #ffd60a, #c7a600); }
-.sysprefs-icon-placeholder[data-pref="keyboard"]     { background: linear-gradient(135deg, #b0b0b5, #7a7a80); }
-.sysprefs-icon-placeholder[data-pref="mouse"]        { background: linear-gradient(135deg, #e0e0e5, #b0b0b5); }
-.sysprefs-icon-placeholder[data-pref="trackpad"]     { background: linear-gradient(135deg, #d0d0d5, #a0a0a5); }
-.sysprefs-icon-placeholder[data-pref="print"]        { background: linear-gradient(135deg, #b0b0b5, #7a7a80); }
-.sysprefs-icon-placeholder[data-pref="sound"]        { background: linear-gradient(135deg, #e8688a, #c9354e); }
-.sysprefs-icon-placeholder[data-pref="mobileme"]     { background: linear-gradient(135deg, #5ac8fa, #007aff); }
-.sysprefs-icon-placeholder[data-pref="network"]      { background: linear-gradient(135deg, #48b0f7, #1a7bd4); }
-.sysprefs-icon-placeholder[data-pref="bluetooth"]    { background: linear-gradient(135deg, #4a90d9, #2660af); }
-.sysprefs-icon-placeholder[data-pref="sharing"]      { background: linear-gradient(135deg, #5ac8fa, #3498db); }
-.sysprefs-icon-placeholder[data-pref="accounts"]     { background: linear-gradient(135deg, #af52de, #7b3fa0); }
-.sysprefs-icon-placeholder[data-pref="datetime"]     { background: linear-gradient(135deg, #ff3b30, #c0272e); }
-.sysprefs-icon-placeholder[data-pref="parental"]     { background: linear-gradient(135deg, #ffcc00, #e0a800); }
-.sysprefs-icon-placeholder[data-pref="swupdate"]     { background: linear-gradient(135deg, #34c759, #248a3d); }
-.sysprefs-icon-placeholder[data-pref="speech"]       { background: linear-gradient(135deg, #b0b0b5, #7a7a80); }
-.sysprefs-icon-placeholder[data-pref="startup"]      { background: linear-gradient(135deg, #8e8e93, #636366); }
-.sysprefs-icon-placeholder[data-pref="timemachine"]  { background: linear-gradient(135deg, #34c759, #1a8a3d); }
+.sysprefs-icon-placeholder[data-pref='appearance'] {
+  background: linear-gradient(135deg, #7c8fdf, #4e5cb5);
+}
+.sysprefs-icon-placeholder[data-pref='dock'] {
+  background: linear-gradient(135deg, #5ac8fa, #007aff);
+}
+.sysprefs-icon-placeholder[data-pref='expose'] {
+  background: linear-gradient(135deg, #636b76, #3e4650);
+}
+.sysprefs-icon-placeholder[data-pref='lang'] {
+  background: linear-gradient(135deg, #af52de, #7b3fa0);
+}
+.sysprefs-icon-placeholder[data-pref='security'] {
+  background: linear-gradient(135deg, #a8a8a8, #6e6e6e);
+}
+.sysprefs-icon-placeholder[data-pref='spotlight'] {
+  background: linear-gradient(135deg, #5e8fd6, #3470c2);
+}
+.sysprefs-icon-placeholder[data-pref='cds'] {
+  background: linear-gradient(135deg, #c7c7cc, #8e8e93);
+}
+.sysprefs-icon-placeholder[data-pref='displays'] {
+  background: linear-gradient(135deg, #5ac8fa, #34aadc);
+}
+.sysprefs-icon-placeholder[data-pref='energy'] {
+  background: linear-gradient(135deg, #ffd60a, #c7a600);
+}
+.sysprefs-icon-placeholder[data-pref='keyboard'] {
+  background: linear-gradient(135deg, #b0b0b5, #7a7a80);
+}
+.sysprefs-icon-placeholder[data-pref='mouse'] {
+  background: linear-gradient(135deg, #e0e0e5, #b0b0b5);
+}
+.sysprefs-icon-placeholder[data-pref='trackpad'] {
+  background: linear-gradient(135deg, #d0d0d5, #a0a0a5);
+}
+.sysprefs-icon-placeholder[data-pref='print'] {
+  background: linear-gradient(135deg, #b0b0b5, #7a7a80);
+}
+.sysprefs-icon-placeholder[data-pref='sound'] {
+  background: linear-gradient(135deg, #e8688a, #c9354e);
+}
+.sysprefs-icon-placeholder[data-pref='mobileme'] {
+  background: linear-gradient(135deg, #5ac8fa, #007aff);
+}
+.sysprefs-icon-placeholder[data-pref='network'] {
+  background: linear-gradient(135deg, #48b0f7, #1a7bd4);
+}
+.sysprefs-icon-placeholder[data-pref='bluetooth'] {
+  background: linear-gradient(135deg, #4a90d9, #2660af);
+}
+.sysprefs-icon-placeholder[data-pref='sharing'] {
+  background: linear-gradient(135deg, #5ac8fa, #3498db);
+}
+.sysprefs-icon-placeholder[data-pref='accounts'] {
+  background: linear-gradient(135deg, #af52de, #7b3fa0);
+}
+.sysprefs-icon-placeholder[data-pref='datetime'] {
+  background: linear-gradient(135deg, #ff3b30, #c0272e);
+}
+.sysprefs-icon-placeholder[data-pref='parental'] {
+  background: linear-gradient(135deg, #ffcc00, #e0a800);
+}
+.sysprefs-icon-placeholder[data-pref='swupdate'] {
+  background: linear-gradient(135deg, #34c759, #248a3d);
+}
+.sysprefs-icon-placeholder[data-pref='speech'] {
+  background: linear-gradient(135deg, #b0b0b5, #7a7a80);
+}
+.sysprefs-icon-placeholder[data-pref='startup'] {
+  background: linear-gradient(135deg, #8e8e93, #636366);
+}
+.sysprefs-icon-placeholder[data-pref='timemachine'] {
+  background: linear-gradient(135deg, #34c759, #1a8a3d);
+}
 
 .sysprefs-icon-label {
   font-size: 10px;
@@ -430,7 +480,7 @@
   cursor: default;
 }
 
-.dss-opt-row input[type="checkbox"] {
+.dss-opt-row input[type='checkbox'] {
   margin: 0;
   width: 12px;
   height: 12px;

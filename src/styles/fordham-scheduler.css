@@ -1,0 +1,555 @@
+/* --- Fordham Scheduler project page (dark theme, maroon accent) --- */
+
+.fs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Toolbar — Snow Leopard chrome */
+
+.fs-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 100%);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.fs-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.fs-toolbar-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 5px;
+}
+
+.fs-toolbar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fs-toolbar-btn {
+  background: linear-gradient(180deg, #f2f2f2 0%, #dcdcdc 100%);
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #333;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  height: 22px;
+  padding: 0 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.fs-toolbar-btn:hover {
+  background: linear-gradient(180deg, #f8f8f8 0%, #e4e4e4 100%);
+  color: #111;
+}
+
+.fs-toolbar-btn:active {
+  background: linear-gradient(180deg, #c8c8c8 0%, #d8d8d8 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark scrollable content area */
+
+.fs-content {
+  flex: 1;
+  overflow: auto;
+  background: radial-gradient(ellipse at 50% 20%, #201a1e 0%, #151012 60%, #0e0a0c 100%);
+  min-height: 0;
+  padding: 20px 24px 32px;
+}
+
+/* Hero row: search + description side by side */
+
+.fs-hero {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+/* Description panel */
+
+.fs-desc {
+  flex: 1;
+  min-width: 0;
+}
+
+.fs-desc-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.fs-desc-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+}
+
+.fs-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fs-stat {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Section headers */
+
+.fs-section {
+  margin-bottom: 24px;
+}
+
+.fs-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+/* ── Before / After story ── */
+
+.fs-story {
+  display: flex;
+  gap: 14px;
+}
+
+.fs-story-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fs-story-card--after {
+  border-color: rgba(154, 0, 0, 0.4);
+  box-shadow: 0 0 12px rgba(154, 0, 0, 0.1);
+}
+
+.fs-story-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.fs-story-card--after .fs-story-badge {
+  color: rgba(220, 80, 80, 0.8);
+}
+
+.fs-story-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Mini spreadsheet grid visual in Before card */
+
+.fs-story-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 8px);
+  gap: 2px;
+  width: 100%;
+  max-width: 140px;
+  margin-top: 4px;
+}
+
+.fs-story-grid-cell {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 1px;
+}
+
+.fs-story-grid-cell--header {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Feature icons in After card */
+
+.fs-story-icons {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.fs-story-icon-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.fs-story-icon-item svg {
+  flex-shrink: 0;
+  color: rgba(220, 80, 80, 0.7);
+}
+
+/* ── Impact callout ── */
+
+.fs-impact {
+  background: rgba(154, 0, 0, 0.08);
+  border: 1px solid rgba(154, 0, 0, 0.25);
+  border-left: 3px solid rgba(154, 0, 0, 0.6);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fs-impact-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.fs-impact-timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.fs-impact-step {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.fs-impact-step--accent {
+  border-color: rgba(154, 0, 0, 0.45);
+  background: rgba(154, 0, 0, 0.12);
+  color: #fff;
+}
+
+.fs-impact-arrow {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 0 6px;
+  user-select: none;
+}
+
+/* Tech tags */
+
+.fs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fs-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Features list */
+
+.fs-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fs-features li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+
+.fs-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(154, 0, 0, 0.7);
+}
+
+/* ── Mock Scheduler Demo ── */
+
+.fs-mock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 280px;
+}
+
+/* Search input */
+
+.fs-search-wrap {
+  position: relative;
+}
+
+.fs-search-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 10px 0 28px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  color: #fff;
+  outline: none;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.fs-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.fs-search-input:focus {
+  border-color: rgba(154, 0, 0, 0.6);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(154, 0, 0, 0.2);
+}
+
+.fs-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Dropdown results */
+
+.fs-search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: rgba(30, 24, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  max-height: 160px;
+  overflow-y: auto;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.fs-search-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fs-search-item:last-child {
+  border-bottom: none;
+}
+
+.fs-search-item:hover {
+  background: rgba(154, 0, 0, 0.25);
+}
+
+.fs-search-item-code {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.fs-search-item-title {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Added exams counter */
+
+.fs-exams-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fs-exams-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+/* ── Calendar grid ── */
+
+.fs-cal {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fs-cal-header {
+  display: grid;
+  grid-template-columns: 36px repeat(5, 1fr);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fs-cal-header-cell {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 4px 0;
+}
+
+.fs-cal-header-cell:first-child {
+  background: none;
+}
+
+.fs-cal-body {
+  display: grid;
+  grid-template-columns: 36px repeat(5, 1fr);
+  position: relative;
+}
+
+.fs-cal-time-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-cal-time-label {
+  height: 24px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-right: 4px;
+  padding-top: 1px;
+  box-sizing: border-box;
+}
+
+.fs-cal-grid {
+  grid-column: 2 / -1;
+  position: relative;
+}
+
+.fs-cal-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fs-cal-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fs-cal-grid-col-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fs-cal-block {
+  position: absolute;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 9px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  cursor: default;
+}
+
+.fs-cal-block-code {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.fs-cal-block-time {
+  font-size: 8px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.fs-cal-empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+}
+
+.fs-mock-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}

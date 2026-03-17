@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { StickyNote } from './StickyNote'
-import type { StickyNoteData, StickyColor } from './StickyNote'
+import type { StickyNoteData, StickyColor } from './sticky-data'
 import type { ContextMenuState } from '../ContextMenu'
 
 type StickiesAppProps = {
@@ -67,20 +67,4 @@ export function StickiesApp({
       ))}
     </div>
   )
-}
-
-export function createStickyNote(existingCount: number): StickyNoteData {
-  const vw = typeof window !== 'undefined' ? window.innerWidth : 800
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 600
-  const jitter = () => Math.floor(Math.random() * 60) - 30
-  return {
-    id: `sticky-${Date.now()}`,
-    color: 'yellow',
-    text: '',
-    x: vw / 2 - 100 + jitter(),
-    y: vh / 2 - 100 + jitter(),
-    width: 200,
-    height: 200,
-    zIndex: existingCount,
-  }
 }

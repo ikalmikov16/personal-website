@@ -77,13 +77,16 @@ export function AboutThisMac({ onClose }: AboutThisMacProps) {
             <button
               type="button"
               className="about-mac-btn"
-              onClick={() => window.open('https://github.com/ikalmikov16', '_blank', 'noopener,noreferrer')}
+              onClick={() =>
+                window.open('https://github.com/ikalmikov16', '_blank', 'noopener,noreferrer')
+              }
             >
               More Info...
             </button>
 
             <p className="about-mac-copyright">
-              TM and © 1983–2011 Apple Inc.<br />
+              TM and © 1983–2011 Apple Inc.
+              <br />
               All Rights Reserved.
             </p>
           </div>

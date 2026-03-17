@@ -15,7 +15,7 @@ export const RESUME_SECTIONS: ResumeSection[] = [
   {
     title: 'Projects',
     content:
-      'Live Mosaic (React, FastAPI, WebSockets, AWS). SketchOff (React Native, Firebase — App Store & Google Play). Fordham Final Exam Scheduler (React, Django, PostgreSQL, Render).',
+      'Live Tesserae (React, FastAPI, WebSockets, AWS). SketchOff (React Native, Firebase — App Store & Google Play). Fordham Final Exam Scheduler (React, Django, PostgreSQL, Render).',
   },
   {
     title: 'Education',

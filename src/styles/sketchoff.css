@@ -1,0 +1,394 @@
+/* --- SketchOff project page (dark indigo theme) --- */
+
+.so {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Toolbar — Snow Leopard chrome */
+
+.so-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 100%);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.so-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.so-toolbar-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 5px;
+}
+
+.so-toolbar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.so-toolbar-btn {
+  background: linear-gradient(180deg, #f2f2f2 0%, #dcdcdc 100%);
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #333;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  height: 22px;
+  padding: 0 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.so-toolbar-btn:hover {
+  background: linear-gradient(180deg, #f8f8f8 0%, #e4e4e4 100%);
+  color: #111;
+}
+
+.so-toolbar-btn:active {
+  background: linear-gradient(180deg, #c8c8c8 0%, #d8d8d8 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark scrollable content */
+
+.so-content {
+  flex: 1;
+  overflow: auto;
+  background: radial-gradient(ellipse at 50% 20%, #161b2e 0%, #0f172a 60%, #0a0f1e 100%);
+  min-height: 0;
+  padding: 20px 24px 32px;
+}
+
+/* Hero row */
+
+.so-hero {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+  align-items: flex-start;
+}
+
+/* Mini sketch pad */
+
+.so-sketchpad {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+}
+
+.so-sketchpad-prompt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.so-sketchpad-prompt-text {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.so-sketchpad-new-btn {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+}
+
+.so-sketchpad-new-btn:hover {
+  background: rgba(99, 102, 241, 0.35);
+  color: #fff;
+}
+
+.so-sketchpad-frame {
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  line-height: 0;
+  overflow: hidden;
+}
+
+.so-sketchpad-canvas {
+  display: block;
+  cursor: crosshair;
+  width: 100%;
+}
+
+.so-sketchpad-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.so-sketchpad-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition:
+    border-color 0.1s ease,
+    transform 0.1s ease;
+}
+
+.so-sketchpad-color:hover {
+  transform: scale(1.15);
+}
+
+.so-sketchpad-color--active {
+  border-color: #6366f1;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(99, 102, 241, 0.3),
+    0 0 6px rgba(99, 102, 241, 0.25);
+}
+
+.so-sketchpad-clear {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.so-sketchpad-clear:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.so-sketchpad-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Description panel */
+
+.so-desc {
+  flex: 1;
+  min-width: 0;
+}
+
+.so-desc-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 2px 0;
+}
+
+.so-desc-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6366f1;
+  margin: 0 0 10px 0;
+}
+
+.so-desc-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+}
+
+.so-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.so-stat {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Section headers */
+
+.so-section {
+  margin-bottom: 24px;
+}
+
+.so-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+/* Game flow cards */
+
+.so-flow {
+  display: flex;
+  gap: 14px;
+}
+
+.so-flow-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.so-flow-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.so-flow-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.so-flow-desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.4;
+}
+
+/* Screenshot carousel */
+
+.so-screenshots {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.so-screenshots::-webkit-scrollbar {
+  height: 4px;
+}
+
+.so-screenshots::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.so-phone {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.so-phone-frame {
+  width: 120px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  background: #000;
+}
+
+.so-phone-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.so-phone-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Tech tags */
+
+.so-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.so-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Features list */
+
+.so-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.so-features li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+
+.so-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(99, 102, 241, 0.6);
+}

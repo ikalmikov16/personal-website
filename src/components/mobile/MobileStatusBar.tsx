@@ -16,7 +16,13 @@ export function MobileStatusBar() {
     <div className="mobile-status-bar">
       <span className="mobile-status-carrier">
         IkaOS
-        <svg className="mobile-status-signal" width="28" height="10" viewBox="0 0 28 10" fill="#fff">
+        <svg
+          className="mobile-status-signal"
+          width="28"
+          height="10"
+          viewBox="0 0 28 10"
+          fill="#fff"
+        >
           <rect x="0" y="7" width="4" height="3" rx="0.5" />
           <rect x="6" y="5" width="4" height="5" rx="0.5" />
           <rect x="12" y="3" width="4" height="7" rx="0.5" />

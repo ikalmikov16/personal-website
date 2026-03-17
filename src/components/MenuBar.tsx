@@ -348,7 +348,7 @@ export function MenuBar({
     id: 'user',
     label: '',
     items: [
-      { type: 'item', label: 'Ika', disabled: true },
+      { type: 'item', label: 'Irakli', disabled: true },
       { type: 'separator' },
       { type: 'item', label: 'Login Window...', disabled: true },
       { type: 'separator' },
@@ -459,9 +459,9 @@ export function MenuBar({
         {renderRightItem(
           'user',
           userMenu,
-          <span className="menu-bar-user">Ika</span>,
+          <span className="menu-bar-user">Irakli</span>,
           undefined,
-          'Ika'
+          'Irakli'
         )}
         <button
           type="button"

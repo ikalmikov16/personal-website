@@ -58,6 +58,7 @@
   height: 64px;
   pointer-events: none;
   -webkit-user-drag: none;
+  border-radius: 12px;
 }
 
 .desktop-icon-label {

@@ -25,7 +25,11 @@ export function BootScreen({ onComplete, reduceMotion }: BootScreenProps) {
   useEffect(() => {
     if (reduceMotion) {
       const t = setTimeout(() => {
-        try { sessionStorage.setItem('ika-os-booted', '1') } catch { /* ignore */ }
+        try {
+          sessionStorage.setItem('ika-os-booted', '1')
+        } catch {
+          /* ignore */
+        }
         onComplete()
       }, 500)
       timersRef.current.push(t)
@@ -35,7 +39,11 @@ export function BootScreen({ onComplete, reduceMotion }: BootScreenProps) {
     const t1 = setTimeout(() => setPhase('fading'), 2500)
     const t2 = setTimeout(() => {
       setPhase('done')
-      try { sessionStorage.setItem('ika-os-booted', '1') } catch { /* ignore */ }
+      try {
+        sessionStorage.setItem('ika-os-booted', '1')
+      } catch {
+        /* ignore */
+      }
       onComplete()
     }, 3000)
 

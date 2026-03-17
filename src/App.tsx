@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { toCanvas } from 'html-to-image'
 import { BootScreen } from './components/BootScreen'
 import { ContextMenu } from './components/ContextMenu'
@@ -8,7 +9,6 @@ import { Desktop } from './components/Desktop'
 import { Dock } from './components/Dock'
 import type { MinimizedThumbnail } from './components/Dock'
 import { MenuBar } from './components/MenuBar'
-import { WelcomeNotification } from './components/WelcomeNotification'
 import { Window } from './components/Window'
 import { WindowTransitionOverlay } from './components/WindowTransitionOverlay'
 import { FinderContent } from './components/apps/FinderContent'
@@ -16,28 +16,47 @@ import { PreviewContent } from './components/apps/PreviewContent'
 import { SafariContent } from './components/apps/SafariContent'
 import { TerminalContent } from './components/apps/TerminalContent'
 import { SystemPreferencesContent } from './components/apps/SystemPreferencesContent'
+import { LiveTesseraeContent } from './components/apps/LiveTesseraeContent'
+import { FordhamSchedulerContent } from './components/apps/FordhamSchedulerContent'
+import { SketchOffContent } from './components/apps/SketchOffContent'
 import { Spotlight } from './components/Spotlight'
 import type { SpotlightResult } from './components/Spotlight'
 import { AboutThisMac } from './components/AboutThisMac'
 import { AppSwitcher } from './components/AppSwitcher'
 import type { AppSwitcherApp } from './components/AppSwitcher'
 import { VolumeHUD } from './components/VolumeHUD'
-import { StickiesApp, createStickyNote } from './components/apps/StickiesApp'
-import type { StickyNoteData } from './components/apps/StickyNote'
+import { StickiesApp } from './components/apps/StickiesApp'
+import { createStickyNote, createDefaultStickyNotes } from './components/apps/sticky-data'
+import type { StickyNoteData } from './components/apps/sticky-data'
 import { DOCK_APPS, DOCK_RIGHT_APPS, TRANSIENT_DOCK_APPS, DESKTOP_ICONS } from './constants/apps'
 import { SAFARI_LINKS } from './data/safari-links'
 import { DEFAULT_WALLPAPER_ID, WALLPAPER_OPTIONS } from './data/wallpapers'
 import { useKonamiCode } from './hooks/useKonamiCode'
-import { MobileShell } from './components/mobile/MobileShell'
+import { MobileNotSupported } from './components/MobileNotSupported'
 
 const STORAGE_KEY_WALLPAPER = 'ikaos-wallpaperId'
 const STORAGE_KEY_STICKIES = 'ika-os-stickies'
+const STORAGE_KEY_STICKIES_OPEN = 'ika-os-stickies-open'
+let _nextStickyZ = 0
 
-function loadStickies(): StickyNoteData[] {
+function loadStickies(): { notes: StickyNoteData[]; isFirstVisit: boolean } {
   try {
     const stored = localStorage.getItem(STORAGE_KEY_STICKIES)
-    return stored ? JSON.parse(stored) : []
-  } catch { return [] }
+    if (stored !== null) return { notes: JSON.parse(stored), isFirstVisit: false }
+  } catch {
+    /* ignore */
+  }
+  return { notes: createDefaultStickyNotes(), isFirstVisit: true }
+}
+
+function loadStickiesOpen(isFirstVisit: boolean): boolean {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_STICKIES_OPEN)
+    if (stored !== null) return stored === '1'
+  } catch {
+    /* ignore */
+  }
+  return isFirstVisit
 }
 
 function getInitialWallpaperId(): string {
@@ -69,7 +88,7 @@ const APP_NAMES: Record<string, string> = {
   systempreferences: 'System Preferences',
   preview: 'Preview',
   stickies: 'Stickies',
-  'project-mosaic': 'Live Mosaic',
+  'project-mosaic': 'Live Tesserae',
   'project-sketchoff': 'SketchOff',
   'project-fordham': 'Fordham Scheduler',
 }
@@ -113,6 +132,12 @@ function getAppContent(
           onTitleChange={props.onTitleChange}
         />
       )
+    case 'project-mosaic':
+      return <LiveTesseraeContent />
+    case 'project-sketchoff':
+      return <SketchOffContent />
+    case 'project-fordham':
+      return <FordhamSchedulerContent />
     default:
       return <p>Content for {appId}</p>
   }
@@ -120,19 +145,28 @@ function getAppContent(
 
 function App() {
   const dockRef = useRef<HTMLDivElement>(null)
-  const windowSnapshotsRef = useRef(new Map<string, HTMLCanvasElement>())
+  const [windowSnapshots, setWindowSnapshots] = useState(() => new Map<string, HTMLCanvasElement>())
   const [openWindows, setOpenWindows] = useState<WindowEntry[]>([])
   const [wallpaperId, setWallpaperId] = useState(getInitialWallpaperId)
   const [windowTransition, setWindowTransition] = useState<WindowTransitionState | null>(null)
   const [booted, setBooted] = useState(() => {
-    try { return sessionStorage.getItem('ika-os-booted') === '1' }
-    catch { return true }
+    try {
+      return sessionStorage.getItem('ika-os-booted') === '1'
+    } catch {
+      return true
+    }
   })
   const [contextMenu, setContextMenu] = useState<ContextMenuState>(null)
-  const [stickiesOpen, setStickiesOpen] = useState(false)
-  const [stickyNotes, setStickyNotes] = useState<StickyNoteData[]>(loadStickies)
+  const [initialStickies] = useState(() => {
+    const result = loadStickies()
+    _nextStickyZ = result.notes.length
+    return result
+  })
+  const [stickiesOpen, setStickiesOpen] = useState(() =>
+    loadStickiesOpen(initialStickies.isFirstVisit)
+  )
+  const [stickyNotes, setStickyNotes] = useState<StickyNoteData[]>(initialStickies.notes)
   const [focusedStickyId, setFocusedStickyId] = useState<string | null>(null)
-  const stickyZRef = useRef(stickyNotes.length)
   const [spotlightOpen, setSpotlightOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [appSwitcher, setAppSwitcher] = useState<{
@@ -142,6 +176,7 @@ function App() {
   const [volumeLevel, setVolumeLevel] = useState(10)
   const [volumeVisible, setVolumeVisible] = useState(false)
   const [easterEgg, setEasterEgg] = useState<'none' | 'crash'>('none')
+  const [animatingMinimizeIds, setAnimatingMinimizeIds] = useState<Set<string>>(() => new Set())
   const [reduceMotion, setReduceMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   )
@@ -175,12 +210,12 @@ function App() {
   }, [])
 
   const getDockIconRect = useCallback((appId: string): DOMRect | null => {
-    const el = dockRef.current?.querySelector<HTMLElement>(`[data-app-id="${appId}"]`)
+    const el = document.querySelector<HTMLElement>(`.dock-wrapper [data-app-id="${appId}"]`)
     return el ? el.getBoundingClientRect() : null
   }, [])
 
   const getThumbRect = useCallback((windowId: string): DOMRect | null => {
-    const el = dockRef.current?.querySelector<HTMLElement>(`[data-window-id="${windowId}"]`)
+    const el = document.querySelector<HTMLElement>(`.dock-wrapper [data-window-id="${windowId}"]`)
     return el ? el.getBoundingClientRect() : null
   }, [])
 
@@ -211,14 +246,27 @@ function App() {
   useEffect(() => {
     if (stickiesSaveTimer.current) clearTimeout(stickiesSaveTimer.current)
     stickiesSaveTimer.current = setTimeout(() => {
-      try { localStorage.setItem(STORAGE_KEY_STICKIES, JSON.stringify(stickyNotes)) }
-      catch { /* ignore */ }
+      try {
+        localStorage.setItem(STORAGE_KEY_STICKIES, JSON.stringify(stickyNotes))
+      } catch {
+        /* ignore */
+      }
     }, 500)
-    return () => { if (stickiesSaveTimer.current) clearTimeout(stickiesSaveTimer.current) }
+    return () => {
+      if (stickiesSaveTimer.current) clearTimeout(stickiesSaveTimer.current)
+    }
   }, [stickyNotes])
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_STICKIES_OPEN, stickiesOpen ? '1' : '0')
+    } catch {
+      /* ignore */
+    }
+  }, [stickiesOpen])
+
   const addStickyNote = useCallback(() => {
-    const note = createStickyNote(stickyZRef.current++)
+    const note = createStickyNote(_nextStickyZ++)
     setStickyNotes((prev) => [...prev, note])
     setFocusedStickyId(note.id)
   }, [])
@@ -234,7 +282,7 @@ function App() {
 
   const focusStickyNote = useCallback((id: string) => {
     setFocusedStickyId(id)
-    const z = stickyZRef.current++
+    const z = _nextStickyZ++
     setStickyNotes((prev) => prev.map((n) => (n.id === id ? { ...n, zIndex: z } : n)))
   }, [])
 
@@ -263,9 +311,7 @@ function App() {
       return [...rest, { ...existing, minimized: false, wasRestored: true }]
     })
     requestAnimationFrame(() => {
-      setOpenWindows((prev) =>
-        prev.map((w) => (w.id === id ? { ...w, wasRestored: false } : w))
-      )
+      setOpenWindows((prev) => prev.map((w) => (w.id === id ? { ...w, wasRestored: false } : w)))
     })
   }, [])
 
@@ -275,10 +321,7 @@ function App() {
     const area = Math.max(1, rect.width * rect.height)
     const maxSnapshotPixels = 4_800_000
     const maxAreaRatio = Math.sqrt(maxSnapshotPixels / area)
-    const pixelRatio = Math.max(
-      1.75,
-      Math.min(4, window.devicePixelRatio * 2.5, maxAreaRatio)
-    )
+    const pixelRatio = Math.max(1.75, Math.min(4, window.devicePixelRatio * 2.5, maxAreaRatio))
     return toCanvas(captureNode, {
       cacheBust: true,
       backgroundColor: '#ffffff',
@@ -295,28 +338,40 @@ function App() {
         return
       }
       const windowRect = el.getBoundingClientRect()
-      const dockIconRect = getDockIconRect(appId)
-      if (!dockIconRect) {
-        minimizeWindow(id)
-        return
-      }
       try {
         const snapshotCanvas = await captureWindowSnapshot(el)
-        windowSnapshotsRef.current.set(id, snapshotCanvas)
+        setWindowSnapshots((prev) => new Map(prev).set(id, snapshotCanvas))
+
+        flushSync(() => {
+          setAnimatingMinimizeIds((prev) => new Set(prev).add(id))
+          minimizeWindow(id)
+        })
+
+        const thumbRect = getThumbRect(id)
+        const dockRect = thumbRect ?? getDockIconRect(appId)
+        if (!dockRect) {
+          setAnimatingMinimizeIds((prev) => {
+            const next = new Set(prev)
+            next.delete(id)
+            return next
+          })
+          return
+        }
+
         setWindowTransition({
           direction: 'minimize',
           windowId: id,
           appId,
           title,
           windowRect,
-          dockIconRect,
+          dockIconRect: dockRect,
           snapshotCanvas,
         })
       } catch {
         minimizeWindow(id)
       }
     },
-    [captureWindowSnapshot, getDockIconRect, minimizeWindow, windowTransition]
+    [captureWindowSnapshot, getDockIconRect, getThumbRect, minimizeWindow, windowTransition]
   )
 
   const startRestoreAnimationById = useCallback(
@@ -328,7 +383,7 @@ function App() {
       const thumbRect = getThumbRect(windowId)
       const fallbackRect = getDockIconRect(existing.appId)
       const dockRect = thumbRect ?? fallbackRect
-      const snapshotCanvas = windowSnapshotsRef.current.get(existing.id)
+      const snapshotCanvas = windowSnapshots.get(existing.id)
       if (!dockRect || !snapshotCanvas) {
         restoreWindowInstantly(existing.id)
         return true
@@ -360,11 +415,18 @@ function App() {
 
       return true
     },
-    [getDockIconRect, getThumbRect, openWindows, restoreWindowInstantly, windowTransition]
+    [
+      getDockIconRect,
+      getThumbRect,
+      openWindows,
+      restoreWindowInstantly,
+      windowSnapshots,
+      windowTransition,
+    ]
   )
 
   const startRestoreAnimation = useCallback(
-    (appId: string, _title: string) => {
+    (appId: string) => {
       if (windowTransition) return false
       const existing = openWindows.find((w) => w.appId === appId && w.minimized)
       if (!existing) return false
@@ -377,7 +439,11 @@ function App() {
     if (!windowTransition) return
 
     if (windowTransition.direction === 'minimize') {
-      minimizeWindow(windowTransition.windowId)
+      setAnimatingMinimizeIds((prev) => {
+        const next = new Set(prev)
+        next.delete(windowTransition.windowId)
+        return next
+      })
       setWindowTransition(null)
       return
     }
@@ -394,39 +460,44 @@ function App() {
         prev.map((w) => (w.id === restoredWindowId ? { ...w, wasRestored: false } : w))
       )
     })
-  }, [minimizeWindow, windowTransition])
+  }, [windowTransition])
 
-  const openWindow = useCallback((appId: string, title: string) => {
-    if (appId === 'stickies') {
-      setStickiesOpen(true)
-      if (stickyNotes.length === 0) {
-        addStickyNote()
+  const openWindow = useCallback(
+    (appId: string, title: string) => {
+      if (appId === 'stickies') {
+        setStickiesOpen(true)
+        if (stickyNotes.length === 0) {
+          addStickyNote()
+        }
+        return
       }
-      return
-    }
-    if (startRestoreAnimation(appId, title)) return
+      if (startRestoreAnimation(appId)) return
 
-    setOpenWindows((prev) => {
-      const existing = prev.find((w) => w.appId === appId)
-      if (existing) {
-        const rest = prev.filter((w) => w.id !== existing.id)
-        return [...rest, existing]
-      }
-      const position = getDefaultPosition(prev.length)
-      const id = `window-${appId}-${Date.now()}`
-      return [
-        ...prev,
-        {
-          id,
-          appId,
-          title,
-          position,
-          size: DEFAULT_WINDOW_SIZE,
-          wasRestored: false,
-        },
-      ]
-    })
-  }, [startRestoreAnimation, stickyNotes.length, addStickyNote])
+      setOpenWindows((prev) => {
+        const existing = prev.find((w) => w.appId === appId)
+        if (existing) {
+          const rest = prev.filter((w) => w.id !== existing.id)
+          return [...rest, existing]
+        }
+        const position = getDefaultPosition(prev.length)
+        const id = `window-${appId}-${Date.now()}`
+        const isProject = appId.startsWith('project-')
+        const size = isProject ? { width: 720, height: 520 } : DEFAULT_WINDOW_SIZE
+        return [
+          ...prev,
+          {
+            id,
+            appId,
+            title,
+            position,
+            size,
+            wasRestored: false,
+          },
+        ]
+      })
+    },
+    [startRestoreAnimation, stickyNotes.length, addStickyNote]
+  )
 
   // ── App Switcher + Volume HUD keyboard handling ──
   const getOpenApps = useCallback((): AppSwitcherApp[] => {
@@ -507,21 +578,32 @@ function App() {
   }, [appSwitcher, getOpenApps, openWindow])
 
   const closeWindow = useCallback((id: string) => {
-    windowSnapshotsRef.current.delete(id)
+    setWindowSnapshots((prev) => {
+      const next = new Map(prev)
+      next.delete(id)
+      return next
+    })
     setOpenWindows((prev) => prev.filter((w) => w.id !== id))
   }, [])
 
-  const closeApp = useCallback((appId: string) => {
-    if (appId === 'stickies') {
-      setStickiesOpen(false)
-      return
-    }
-    setOpenWindows((prev) => {
-      const toRemove = prev.filter((w) => w.appId === appId)
-      toRemove.forEach((w) => windowSnapshotsRef.current.delete(w.id))
-      return prev.filter((w) => w.appId !== appId)
-    })
-  }, [])
+  const closeApp = useCallback(
+    (appId: string) => {
+      if (appId === 'stickies') {
+        setStickiesOpen(false)
+        return
+      }
+      const idsToRemove = openWindows.filter((w) => w.appId === appId).map((w) => w.id)
+      setOpenWindows((prev) => prev.filter((w) => w.appId !== appId))
+      if (idsToRemove.length > 0) {
+        setWindowSnapshots((prev) => {
+          const next = new Map(prev)
+          idsToRemove.forEach((id) => next.delete(id))
+          return next
+        })
+      }
+    },
+    [openWindows]
+  )
 
   const updateWindowPosition = useCallback((id: string, x: number, y: number) => {
     setOpenWindows((prev) =>
@@ -544,7 +626,9 @@ function App() {
     visibleWindows.length > 0 ? visibleWindows[visibleWindows.length - 1] : null
   const frontmostAppName = frontmostWindow
     ? (APP_NAMES[frontmostWindow.appId] ?? frontmostWindow.title)
-    : stickiesOpen ? 'Stickies' : 'Finder'
+    : stickiesOpen
+      ? 'Stickies'
+      : 'Finder'
 
   const runningTransientApps = TRANSIENT_DOCK_APPS.filter((app) =>
     openWindows.some((w) => w.appId === app.appId)
@@ -562,48 +646,49 @@ function App() {
       windowId: w.id,
       appId: w.appId,
       title: w.title,
-      snapshot: windowSnapshotsRef.current.get(w.id),
+      snapshot: windowSnapshots.get(w.id),
     }))
 
-  const spotlightItems: SpotlightResult[] = useMemo(() => [
-    ...DOCK_APPS
-      .filter((a) => !a.href)
-      .map((a) => ({
+  const spotlightItems: SpotlightResult[] = useMemo(
+    () => [
+      ...DOCK_APPS.filter((a) => !a.href).map((a) => ({
         id: `app-${a.appId}`,
         label: a.title,
         category: 'Applications',
         icon: a.icon,
         action: () => openWindow(a.appId, a.title),
       })),
-    ...DESKTOP_ICONS.map((d) => ({
-      id: `desktop-${d.appId}`,
-      label: d.label,
-      category: 'Projects',
-      icon: d.icon,
-      action: () => openWindow(d.appId, d.title),
-    })),
-    ...SAFARI_LINKS.map((l) => ({
-      id: `link-${l.shortName}`,
-      label: l.label,
-      category: 'Links',
-      icon: undefined,
-      action: () => openUrl(l.url),
-    })),
-    {
-      id: 'action-wallpaper',
-      label: 'Change Desktop Background',
-      category: 'Actions',
-      icon: '/icons/system-preferences.png',
-      action: () => openWindow('systempreferences', 'System Preferences'),
-    },
-    {
-      id: 'action-about',
-      label: 'About This Mac',
-      category: 'Actions',
-      icon: undefined,
-      action: () => setAboutOpen(true),
-    },
-  ], [openWindow, openUrl])
+      ...DESKTOP_ICONS.map((d) => ({
+        id: `desktop-${d.appId}`,
+        label: d.label,
+        category: 'Projects',
+        icon: d.icon,
+        action: () => openWindow(d.appId, d.title),
+      })),
+      ...SAFARI_LINKS.map((l) => ({
+        id: `link-${l.shortName}`,
+        label: l.label,
+        category: 'Links',
+        icon: undefined,
+        action: () => openUrl(l.url),
+      })),
+      {
+        id: 'action-wallpaper',
+        label: 'Change Desktop Background',
+        category: 'Actions',
+        icon: '/icons/system-preferences.png',
+        action: () => openWindow('systempreferences', 'System Preferences'),
+      },
+      {
+        id: 'action-about',
+        label: 'About This Mac',
+        category: 'Actions',
+        icon: undefined,
+        action: () => setAboutOpen(true),
+      },
+    ],
+    [openWindow, openUrl]
+  )
 
   const closeFrontmostWindow = useCallback(() => {
     if (!frontmostWindow) return
@@ -646,15 +731,12 @@ function App() {
   }, [])
 
   if (isNarrowViewport) {
-    return <MobileShell wallpaperId={wallpaperId} onWallpaperChange={applyWallpaperId} />
+    return <MobileNotSupported />
   }
 
   return (
     <div className="app-shell" data-theme="dark" onContextMenu={(e) => e.preventDefault()}>
-      {!booted && (
-        <BootScreen onComplete={() => setBooted(true)} reduceMotion={reduceMotion} />
-      )}
-      {booted && <WelcomeNotification reduceMotion={reduceMotion} />}
+      {!booted && <BootScreen onComplete={() => setBooted(true)} reduceMotion={reduceMotion} />}
       <MenuBar
         currentAppName={frontmostAppName}
         onOpenWindow={openWindow}
@@ -725,6 +807,7 @@ function App() {
         rightApps={dynamicRightApps}
         minimizedThumbnails={minimizedThumbnails}
         onRestoreWindow={startRestoreAnimationById}
+        animatingMinimizeIds={animatingMinimizeIds}
       />
       {contextMenu && (
         <ContextMenu
@@ -737,7 +820,10 @@ function App() {
       {spotlightOpen && (
         <Spotlight
           onClose={() => setSpotlightOpen(false)}
-          onAction={(action) => { action(); setSpotlightOpen(false) }}
+          onAction={(action) => {
+            action()
+            setSpotlightOpen(false)
+          }}
           searchItems={spotlightItems}
           reduceMotion={reduceMotion}
         />

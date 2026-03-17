@@ -1,35 +1,11 @@
 import { useRef, useCallback } from 'react'
-
-export type StickyColor = 'yellow' | 'blue' | 'pink' | 'green' | 'purple' | 'gray'
-
-export type StickyNoteData = {
-  id: string
-  color: StickyColor
-  text: string
-  x: number
-  y: number
-  width: number
-  height: number
-  zIndex: number
-}
-
-export const STICKY_COLORS: Record<
-  StickyColor,
-  { bg: string; header: string; border: string; rule: string }
-> = {
-  yellow: { bg: '#FDFD96', header: '#F0E848', border: '#D4C830', rule: 'rgba(0,0,0,0.06)' },
-  blue:   { bg: '#AEC6CF', header: '#96B4BE', border: '#7A9CA8', rule: 'rgba(0,0,0,0.07)' },
-  pink:   { bg: '#FFB7CE', header: '#F098B0', border: '#D87898', rule: 'rgba(0,0,0,0.06)' },
-  green:  { bg: '#B2F2BB', header: '#8AD898', border: '#6ABE78', rule: 'rgba(0,0,0,0.06)' },
-  purple: { bg: '#D8B4FE', header: '#C098EE', border: '#A878D4', rule: 'rgba(0,0,0,0.06)' },
-  gray:   { bg: '#E8E8E8', header: '#D4D4D4', border: '#BCBCBC', rule: 'rgba(0,0,0,0.06)' },
-}
+import { STICKY_COLORS } from './sticky-data'
+import type { StickyNoteData } from './sticky-data'
 
 const MIN_W = 140
 const MIN_H = 100
 const MAX_W = 600
 const MAX_H = 700
-const LINE_HEIGHT = 20
 
 type StickyNoteProps = {
   note: StickyNoteData
@@ -52,8 +28,12 @@ export function StickyNote({
   onSizeChange,
   onContextMenu,
 }: StickyNoteProps) {
-  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
-  const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(null)
+  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(
+    null
+  )
+  const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(
+    null
+  )
 
   const colors = STICKY_COLORS[note.color]
 
@@ -115,14 +95,6 @@ export function StickyNote({
     [note.width, note.height, onFocus, onSizeChange]
   )
 
-  const ruledBg = `repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent ${LINE_HEIGHT - 1}px,
-    ${colors.rule} ${LINE_HEIGHT - 1}px,
-    ${colors.rule} ${LINE_HEIGHT}px
-  )`
-
   return (
     <div
       className={`sticky-note${isFocused ? ' sticky-note--focused' : ''}`}
@@ -156,7 +128,7 @@ export function StickyNote({
 
       <textarea
         className="sticky-note-text"
-        style={{ background: `${colors.bg}`, backgroundImage: ruledBg }}
+        style={{ background: colors.bg }}
         value={note.text}
         onChange={(e) => onTextChange(e.target.value)}
         onFocus={onFocus}
@@ -164,7 +136,11 @@ export function StickyNote({
         spellCheck={false}
       />
 
-      <div className="sticky-note-resize" onMouseDown={handleResizeMouseDown} aria-label="Resize note" />
+      <div
+        className="sticky-note-resize"
+        onMouseDown={handleResizeMouseDown}
+        aria-label="Resize note"
+      />
     </div>
   )
 }

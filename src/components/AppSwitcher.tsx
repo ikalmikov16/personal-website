@@ -21,12 +21,7 @@ export function AppSwitcher({ apps, selectedIndex, reduceMotion }: AppSwitcherPr
             key={app.appId}
             className={`app-switcher-item${i === selectedIndex ? ' app-switcher-item--selected' : ''}`}
           >
-            <img
-              src={app.icon}
-              alt=""
-              className="app-switcher-icon"
-              draggable={false}
-            />
+            <img src={app.icon} alt="" className="app-switcher-icon" draggable={false} />
             <span className="app-switcher-label">{app.title}</span>
           </div>
         ))}
