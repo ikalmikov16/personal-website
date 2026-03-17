@@ -25,7 +25,8 @@ import { AboutThisMac } from './components/AboutThisMac'
 import { AppSwitcher } from './components/AppSwitcher'
 import type { AppSwitcherApp } from './components/AppSwitcher'
 import { VolumeHUD } from './components/VolumeHUD'
-import { StickiesApp } from './components/apps/StickiesApp'
+import { STICKY_COLOR_LABELS } from './components/apps/sticky-data'
+import { StickyNote } from './components/apps/StickyNote'
 import { createStickyNote, createDefaultStickyNotes } from './components/apps/sticky-data'
 import type { StickyNoteData } from './components/apps/sticky-data'
 import { DOCK_APPS, DOCK_RIGHT_APPS, TRANSIENT_DOCK_APPS, DESKTOP_ICONS } from './constants/apps'
@@ -167,6 +168,9 @@ function App() {
   )
   const [stickyNotes, setStickyNotes] = useState<StickyNoteData[]>(initialStickies.notes)
   const [focusedStickyId, setFocusedStickyId] = useState<string | null>(null)
+  const [stackOrder, setStackOrder] = useState<string[]>(() =>
+    initialStickies.notes.map((n) => n.id)
+  )
   const [spotlightOpen, setSpotlightOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [appSwitcher, setAppSwitcher] = useState<{
@@ -269,11 +273,13 @@ function App() {
     const note = createStickyNote(_nextStickyZ++)
     setStickyNotes((prev) => [...prev, note])
     setFocusedStickyId(note.id)
+    setStackOrder((prev) => [...prev, note.id])
   }, [])
 
   const closeStickyNote = useCallback((id: string) => {
     setStickyNotes((prev) => prev.filter((n) => n.id !== id))
     setFocusedStickyId((prev) => (prev === id ? null : prev))
+    setStackOrder((prev) => prev.filter((x) => x !== id))
   }, [])
 
   const updateStickyNote = useCallback((id: string, updates: Partial<StickyNoteData>) => {
@@ -282,8 +288,7 @@ function App() {
 
   const focusStickyNote = useCallback((id: string) => {
     setFocusedStickyId(id)
-    const z = _nextStickyZ++
-    setStickyNotes((prev) => prev.map((n) => (n.id === id ? { ...n, zIndex: z } : n)))
+    setStackOrder((prev) => [...prev.filter((x) => x !== id), id])
   }, [])
 
   const openUrl = useCallback((url: string) => {
@@ -297,10 +302,12 @@ function App() {
       const rest = prev.filter((w) => w.id !== id)
       return [...rest, entry]
     })
+    setStackOrder((prev) => [...prev.filter((x) => x !== id), id])
   }, [])
 
   const minimizeWindow = useCallback((id: string) => {
     setOpenWindows((prev) => prev.map((w) => (w.id === id ? { ...w, minimized: true } : w)))
+    setStackOrder((prev) => prev.filter((x) => x !== id))
   }, [])
 
   const restoreWindowInstantly = useCallback((id: string) => {
@@ -310,6 +317,7 @@ function App() {
       const rest = prev.filter((w) => w.id !== id)
       return [...rest, { ...existing, minimized: false, wasRestored: true }]
     })
+    setStackOrder((prev) => [...prev.filter((x) => x !== id), id])
     requestAnimationFrame(() => {
       setOpenWindows((prev) => prev.map((w) => (w.id === id ? { ...w, wasRestored: false } : w)))
     })
@@ -450,6 +458,7 @@ function App() {
 
     const restoredWindowId = windowTransition.windowId
     setWindowTransition(null)
+    setStackOrder((prev) => [...prev.filter((x) => x !== restoredWindowId), restoredWindowId])
     setOpenWindows((prev) =>
       prev.map((w) =>
         w.id === restoredWindowId ? { ...w, minimized: false, wasRestored: true } : w
@@ -476,11 +485,13 @@ function App() {
       setOpenWindows((prev) => {
         const existing = prev.find((w) => w.appId === appId)
         if (existing) {
+          setStackOrder((order) => [...order.filter((x) => x !== existing.id), existing.id])
           const rest = prev.filter((w) => w.id !== existing.id)
           return [...rest, existing]
         }
         const position = getDefaultPosition(prev.length)
         const id = `window-${appId}-${Date.now()}`
+        setStackOrder((order) => [...order, id])
         const isProject = appId.startsWith('project-')
         const size = isProject ? { width: 720, height: 520 } : DEFAULT_WINDOW_SIZE
         return [
@@ -584,6 +595,7 @@ function App() {
       return next
     })
     setOpenWindows((prev) => prev.filter((w) => w.id !== id))
+    setStackOrder((prev) => prev.filter((x) => x !== id))
   }, [])
 
   const closeApp = useCallback(
@@ -594,6 +606,7 @@ function App() {
       }
       const idsToRemove = openWindows.filter((w) => w.appId === appId).map((w) => w.id)
       setOpenWindows((prev) => prev.filter((w) => w.appId !== appId))
+      setStackOrder((prev) => prev.filter((x) => !idsToRemove.includes(x)))
       if (idsToRemove.length > 0) {
         setWindowSnapshots((prev) => {
           const next = new Map(prev)
@@ -621,12 +634,18 @@ function App() {
     setOpenWindows((prev) => prev.map((w) => (w.id === id ? { ...w, title } : w)))
   }, [])
 
-  const visibleWindows = openWindows.filter((w) => !w.minimized)
+  const stickyIds = new Set(stickyNotes.map((n) => n.id))
+  const frontmostId = [...stackOrder].reverse().find((id) => {
+    if (stickyIds.has(id)) return stickiesOpen
+    return openWindows.some((w) => w.id === id && !w.minimized)
+  })
   const frontmostWindow =
-    visibleWindows.length > 0 ? visibleWindows[visibleWindows.length - 1] : null
+    frontmostId && !stickyIds.has(frontmostId)
+      ? (openWindows.find((w) => w.id === frontmostId) ?? null)
+      : null
   const frontmostAppName = frontmostWindow
     ? (APP_NAMES[frontmostWindow.appId] ?? frontmostWindow.title)
-    : stickiesOpen
+    : frontmostId && stickyIds.has(frontmostId)
       ? 'Stickies'
       : 'Finder'
 
@@ -749,44 +768,68 @@ function App() {
       />
       <Desktop wallpaperId={wallpaperId} onOpenWindow={openWindow} onContextMenu={setContextMenu} />
       <div className="windows-layer">
-        {openWindows.map((win, index) =>
-          win.minimized || win.id === windowTransition?.windowId ? null : (
-            <Window
-              key={win.id}
-              id={win.id}
-              title={win.title}
-              position={win.position}
-              size={win.size}
-              zIndex={index}
-              isFocused={win.id === frontmostWindow?.id}
-              onClose={() => closeWindow(win.id)}
-              onFocus={() => focusWindow(win.id)}
-              onMinimize={() => startMinimizeAnimation(win.id, win.appId, win.title)}
-              onZoom={() => zoomWindow(win.id)}
-              onPositionChange={(x, y) => updateWindowPosition(win.id, x, y)}
-              onSizeChange={(w, h) => updateWindowSize(win.id, w, h)}
-              playOpenAnimation={!win.wasRestored}
-            >
-              {getAppContent(win.appId, {
-                openWindow,
-                openUrl,
-                wallpaperId,
-                onWallpaperChange: applyWallpaperId,
-                onTitleChange: (title) => updateWindowTitle(win.id, title),
-              })}
-            </Window>
-          )
-        )}
+        {stackOrder.map((id, index) => {
+          const win = openWindows.find((w) => w.id === id)
+          if (win && !win.minimized && win.id !== windowTransition?.windowId) {
+            return (
+              <Window
+                key={win.id}
+                id={win.id}
+                title={win.title}
+                position={win.position}
+                size={win.size}
+                zIndex={index}
+                isFocused={win.id === frontmostWindow?.id}
+                onClose={() => closeWindow(win.id)}
+                onFocus={() => focusWindow(win.id)}
+                onMinimize={() => startMinimizeAnimation(win.id, win.appId, win.title)}
+                onZoom={() => zoomWindow(win.id)}
+                onPositionChange={(x, y) => updateWindowPosition(win.id, x, y)}
+                onSizeChange={(w, h) => updateWindowSize(win.id, w, h)}
+                playOpenAnimation={!win.wasRestored}
+              >
+                {getAppContent(win.appId, {
+                  openWindow,
+                  openUrl,
+                  wallpaperId,
+                  onWallpaperChange: applyWallpaperId,
+                  onTitleChange: (title) => updateWindowTitle(win.id, title),
+                })}
+              </Window>
+            )
+          }
+          const note = stickyNotes.find((n) => n.id === id)
+          if (note && stickiesOpen) {
+            return (
+              <StickyNote
+                key={note.id}
+                note={note}
+                isFocused={focusedStickyId === note.id}
+                onFocus={() => focusStickyNote(note.id)}
+                onClose={() => closeStickyNote(note.id)}
+                onTextChange={(text) => updateStickyNote(note.id, { text })}
+                onPositionChange={(x, y) => updateStickyNote(note.id, { x, y })}
+                onSizeChange={(width, height) => updateStickyNote(note.id, { width, height })}
+                onContextMenu={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setContextMenu({
+                    x: e.clientX,
+                    y: e.clientY,
+                    items: STICKY_COLOR_LABELS.map(({ color, label }) => ({
+                      type: 'item' as const,
+                      label: `● ${label}`,
+                      action: () => updateStickyNote(note.id, { color }),
+                    })),
+                  })
+                }}
+                stackZIndex={index}
+              />
+            )
+          }
+          return null
+        })}
       </div>
-      <StickiesApp
-        isOpen={stickiesOpen}
-        notes={stickyNotes}
-        focusedNoteId={focusedStickyId}
-        onFocusNote={focusStickyNote}
-        onCloseNote={closeStickyNote}
-        onUpdateNote={updateStickyNote}
-        onContextMenu={setContextMenu}
-      />
       {windowTransition && (
         <WindowTransitionOverlay
           snapshotCanvas={windowTransition.snapshotCanvas}

@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { StickyNote } from './StickyNote'
-import type { StickyNoteData, StickyColor } from './sticky-data'
+import type { StickyNoteData } from './sticky-data'
+import { STICKY_COLOR_LABELS } from './sticky-data'
 import type { ContextMenuState } from '../ContextMenu'
 
 type StickiesAppProps = {
@@ -12,15 +13,6 @@ type StickiesAppProps = {
   onUpdateNote: (id: string, updates: Partial<StickyNoteData>) => void
   onContextMenu?: (state: ContextMenuState) => void
 }
-
-const COLOR_LABELS: { color: StickyColor; label: string }[] = [
-  { color: 'yellow', label: 'Yellow' },
-  { color: 'blue', label: 'Blue' },
-  { color: 'green', label: 'Green' },
-  { color: 'pink', label: 'Pink' },
-  { color: 'purple', label: 'Purple' },
-  { color: 'gray', label: 'Gray' },
-]
 
 export function StickiesApp({
   isOpen,
@@ -38,7 +30,7 @@ export function StickiesApp({
       onContextMenu?.({
         x: e.clientX,
         y: e.clientY,
-        items: COLOR_LABELS.map(({ color, label }) => ({
+        items: STICKY_COLOR_LABELS.map(({ color, label }) => ({
           type: 'item' as const,
           label: `● ${label}`,
           action: () => onUpdateNote(noteId, { color }),

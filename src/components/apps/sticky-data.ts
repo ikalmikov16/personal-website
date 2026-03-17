@@ -11,6 +11,15 @@ export type StickyNoteData = {
   zIndex: number
 }
 
+export const STICKY_COLOR_LABELS: { color: StickyColor; label: string }[] = [
+  { color: 'yellow', label: 'Yellow' },
+  { color: 'blue', label: 'Blue' },
+  { color: 'green', label: 'Green' },
+  { color: 'pink', label: 'Pink' },
+  { color: 'purple', label: 'Purple' },
+  { color: 'gray', label: 'Gray' },
+]
+
 export const STICKY_COLORS: Record<
   StickyColor,
   { bg: string; header: string; border: string; rule: string }

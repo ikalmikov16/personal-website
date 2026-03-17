@@ -16,6 +16,8 @@ type StickyNoteProps = {
   onPositionChange: (x: number, y: number) => void
   onSizeChange: (width: number, height: number) => void
   onContextMenu?: (e: React.MouseEvent) => void
+  /** Override z-index when in unified window stack */
+  stackZIndex?: number
 }
 
 export function StickyNote({
@@ -27,6 +29,7 @@ export function StickyNote({
   onPositionChange,
   onSizeChange,
   onContextMenu,
+  stackZIndex,
 }: StickyNoteProps) {
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(
     null
@@ -103,7 +106,7 @@ export function StickyNote({
         top: note.y,
         width: note.width,
         height: note.height,
-        zIndex: note.zIndex,
+        zIndex: stackZIndex ?? note.zIndex,
       }}
       onMouseDown={onFocus}
     >
