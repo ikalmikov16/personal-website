@@ -109,7 +109,7 @@ export function ArchDiagram() {
                 fill={n.accent ? '#fff' : 'rgba(255,255,255,0.85)'}
                 fontSize={11}
                 fontWeight={500}
-                fontFamily="'Lucida Grande', sans-serif"
+                fontFamily="'Lucida Grande', 'Lucida Sans Unicode', sans-serif"
               >
                 {n.label}
               </text>
@@ -121,7 +121,7 @@ export function ArchDiagram() {
                   dominantBaseline="central"
                   fill="rgba(255,255,255,0.35)"
                   fontSize={9}
-                  fontFamily="'Lucida Grande', sans-serif"
+                  fontFamily="'Lucida Grande', 'Lucida Sans Unicode', sans-serif"
                 >
                   {n.sub}
                 </text>

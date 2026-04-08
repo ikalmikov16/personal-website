@@ -34,17 +34,20 @@
 }
 
 .menu-bar-apple {
-  font-size: 14px;
-  line-height: 1;
   cursor: pointer;
   padding: 0 8px;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   border: none;
   background: transparent;
   color: inherit;
   border-radius: 3px;
+}
+
+.menu-bar-apple svg {
+  display: block;
 }
 
 .menu-bar-apple:hover {
