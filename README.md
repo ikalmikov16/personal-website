@@ -1,4 +1,4 @@
-# IkaOS
+# IkaOS 
 
 A faithful Mac OS X Snow Leopard replica built as a personal portfolio. Explore projects, resume, and links through a fully interactive browser-based desktop experience — complete with draggable windows, a dock, menu bar, Spotlight search, Stickies, and more.
 
